@@ -9,8 +9,8 @@
   <b>Current Framework Version: 0.1.0</b>
 </p>
 
-[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dgumenyuk/AmbieGen_tool/issues)
-  [![HitCount](https://hits.dwyl.com/dgumenyuk/AmbieGen_tool.svg?style=flat-square&show=unique)](http://hits.dwyl.com/dgumenyuk/AmbieGen_tool)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/swat-lab-optimization/AmbieGen-tool/issues)
+  [![HitCount](https://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool.svg?style=flat-square&show=unique)](http://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool)
 ![Code Grade](https://api.codiga.io/project/34688/score/svg)
 ![Code Grade](https://api.codiga.io/project/34688/status/svg)
 
@@ -30,7 +30,7 @@ author = {Dmytro Humeniuk and Foutse Khomh and Giuliano Antoniol}
 ## Installation
 1. Clone this repository to your local machine.
 2. To install the dependencies needed to use the project, run `pip install -r requirements.txt` from inside the repository folder. Python 3.8 + is required.
-3. Now AmbieGen is ready to use. Check the [following section](https://github.com/dgumenyuk/AmbieGen_tool#usage) on how to use it.
+3. Now AmbieGen is ready to use. Check the [following section](https://github.com/swat-lab-optimization/AmbieGen-tool#usage) on how to use it.
 
 ## Usage
 1. You can start the test case generation process by running from inside the repository: 
@@ -49,7 +49,7 @@ Here's of how to configure the tool to run the test case generation for autonomo
     ```
 3. Running the script will start the search algorithms for test case generation and provide the output of the search process in the form of the number of evaluations done, constraint violations and best solutions found.
 4. At the output, a test suite of the 30 test cases will be generated and saved in the configured folder in the ```config.py``` file. The additional information about the test suite, such as the fitness of each test case, the average diversity of the solutions as well as well as the convergence of the solutions (best solution found at each generation) will also be saved.
-5. More information about the avalable options can be found in the [next section](https://github.com/dgumenyuk/AmbieGen_tool#options-and-parameters).
+5. More information about the avalable options can be found in the [next section](https://github.com/swat-lab-optimization/AmbieGen-tool#options-and-parameters).
 
 ## Options and parameters
 1. In the ```optimize.py``` file you can specify the system under test, the algorithm to use and the number of runs to perform. 
@@ -114,9 +114,9 @@ Consider an example below. You can see a test case represented as a map with 5 o
 
 ## Adding a new problem
 Our fameowork can be easily extended to support a new system to test. To do so, you need to implement the following:  
-* ```YourProblem``` class. As an example you can refer to the classes implemented in the [```problems``` section](https://github.com/dgumenyuk/AmbieGen_tool/tree/main/ambiegen/problems). In this class you specifie the constraints of your problem as well as indicate the mecanism to calculate the fitness functions.
-* ```YourSampling``` class. As an example you can refer to the classes implemented in the [```samplers``` section](https://github.com/dgumenyuk/AmbieGen_tool/tree/main/ambiegen/samplers). In this class you specify how to generate the initial population of the algorithm and add the function to produce a random solution.
-* ```YourCrossover``` and ```YourMutation``` classes. As an example you can refer to the classes implemented in the [```search_operators``` section](https://github.com/dgumenyuk/AmbieGen_tool/tree/main/ambiegen/search_operators). In these classes you specify how to perform the crossover and mutation operations.
+* ```YourProblem``` class. As an example you can refer to the classes implemented in the [```problems``` section](https://github.com/swat-lab-optimization/AmbieGen-tool/tree/main/ambiegen/problems). In this class you specifie the constraints of your problem as well as indicate the mecanism to calculate the fitness functions.
+* ```YourSampling``` class. As an example you can refer to the classes implemented in the [```samplers``` section](https://github.com/swat-lab-optimization/AmbieGen-tool/tree/main/ambiegen/samplers). In this class you specify how to generate the initial population of the algorithm and add the function to produce a random solution.
+* ```YourCrossover``` and ```YourMutation``` classes. As an example you can refer to the classes implemented in the [```search_operators``` section](https://github.com/swat-lab-optimization/AmbieGen-tool/tree/main/ambiegen/search_operators). In these classes you specify how to perform the crossover and mutation operations.
 * ```YourSolutuion``` class. As an example you can refer to the classes implemented in the [```solutions``` section](https://github.com/dgumenyuk/AmbieGen_tool/tree/main/ambiegen/solutions). In this class you should implement the fitness evaluation function, novelty calculation as well as the function for building the plot of the test case:
     ```python
     def eval_fitness(self):
@@ -154,7 +154,7 @@ Our fameowork can be easily extended to support a new system to test. To do so, 
     ```
 
 ## Contributing
-Bug reports and pull requests are welcome on GitHub at [https://github.com/dgumenyuk/AmbieGen_tool](https://github.com/dgumenyuk/AmbieGen_tool). If you have any questions, please contact me at dmytro.humeniuk@polymtl.ca.
+Bug reports and pull requests are welcome on GitHub at [https://github.com/dgumenyuk/AmbieGen_tool](https://github.com/swat-lab-optimization/AmbieGen-tool). If you have any questions, please contact me at dmytro.humeniuk@polymtl.ca.
 
 ## License
 This code is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).    
