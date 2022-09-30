@@ -58,7 +58,7 @@ def main(problem, algo, runs_number, save_results=True, save_images=True):
 
 ################################## MAIN ########################################
 problem = "vehicle"
-algo = "nsga2"
+algo = "ga"
 runs_number = 1
 if __name__ == "__main__":
     main(problem, algo, runs_number)
