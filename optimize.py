@@ -1,8 +1,9 @@
+import argparse
 from pymoo.termination import get_termination
-
-import config as cf
 from pymoo.optimize import minimize
 
+
+import config as cf
 from ambiegen.utils.get_convergence import get_convergence
 from ambiegen import ALRGORITHMS
 from ambiegen.problems import PROBLEMS
@@ -16,10 +17,36 @@ from ambiegen.utils.save_tc_results import save_tc_results
 from ambiegen.utils.save_tcs_images import save_tcs_images
 
 
-def main(problem, algo, runs_number, save_results=True, save_images=True):
+def parse_arguments():
+    '''
+    Function for parsing the arguments
+    '''
+    parser = argparse.ArgumentParser(
+                    prog = 'optimize.py',
+                    description = 'A tool for generating test cases for autonomous systems',
+                    epilog = "For more information, please visit https://github.com/swat-lab-optimization/AmbieGen-tool ")
+    parser.add_argument('--problem', type=str, default="vehicle", help='Problem to solve, possivle values: vehicle, robot')
+    parser.add_argument('--algorithm', type=str, default="nsga2", help='Algorithm to use, possivle values: nsga2, ga, random')
+    parser.add_argument('--runs', type=int, default=1, help='Number of runs')
+    parser.add_argument('--save_results', type=str, default=True, help='Save results, possible values: True, False')
+    args = parser.parse_args()
+    return args
+
+
+
+def main(problem, algo, runs_number, save_results):
     """
     Function for running the optimization and saving the results"""
 
+    print("Running the optimization")
+    print("Problem: ", problem)
+    print("Algorithm: ", algo)
+    print("Runs number: ", runs_number)
+    print("Saving the results: ", save_results)
+    print("Number of generations: ", cf.ga["n_gen"])
+    print("Population size: ", cf.ga["pop_size"])
+
+    
     n_offsprings = cf.ga["pop_size"]
     algorithm = ALRGORITHMS[algo](
         n_offsprings=n_offsprings,
@@ -30,8 +57,8 @@ def main(problem, algo, runs_number, save_results=True, save_images=True):
         eliminate_duplicates=DuplicateElimination(),
     )
 
-    #termination = get_termination("n_gen", cf.ga["n_gen"])
-    termination = get_termination("n_eval", 65100)
+    termination = get_termination("n_gen", cf.ga["n_gen"])
+    #termination = get_termination("n_eval", 65100)
 
     tc_stats = {}
     tcs = {}
@@ -60,14 +87,12 @@ def main(problem, algo, runs_number, save_results=True, save_images=True):
 
         if save_results:
             save_tc_results(tc_stats, tcs, tcs_convergence)
-        if save_images:
             save_tcs_images(test_suite, problem, m)
 
 
 ################################## MAIN ########################################
-problem = "vehicle"
-algo = "nsga2"
-runs_number = 30
+
 if __name__ == "__main__":
-    main(problem, algo, runs_number)
+    args = parse_arguments()
+    main(args.problem, args.algorithm, args.runs, args.save_results)
 
