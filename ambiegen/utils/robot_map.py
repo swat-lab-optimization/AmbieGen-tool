@@ -1,9 +1,5 @@
-from shapely.geometry import Point
-from shapely.geometry.polygon import Polygon
-import matplotlib.pyplot as plt
-import time
-import numpy as np
 
+import numpy as np
 
 class Map:
 
@@ -18,6 +14,7 @@ class Map:
         self.max_y = map_size
         self.min_x = 0
         self.min_y = 0
+        
 
         self.init_pos = [0, 1]
 
@@ -115,7 +112,6 @@ class Map:
           a boolean value.
         """
         if (self.in_polygon(point)) or self.point_out_of_bounds(point):
-            self.discount += 1
             return False
         else:
             return True
@@ -186,8 +182,6 @@ class Map:
         self.current_level = 2
 
         self.create_init_box()
-
-        self.discount = 0
 
         tc = states
         for state in tc:

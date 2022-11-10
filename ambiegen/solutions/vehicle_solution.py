@@ -1,7 +1,10 @@
-from ambiegen.utils.vehicle import Car
+
+
+import matplotlib.pyplot as plt
+
 import config as cf
 from ambiegen.utils.car_road import Map
-import matplotlib.pyplot as plt
+from ambiegen.utils.vehicle import Car
 
 
 class VehicleSolution:
@@ -15,10 +18,9 @@ class VehicleSolution:
 
         self.road_points = []
         self.states = []
-        speed = 9
-        steer_ang = 12
+        self.speed = 9
+        self.steer_ang = 12
         self.map_size = cf.vehicle_env["map_size"]
-        self.car = Car(speed, steer_ang, self.map_size)
         self.fitness = 0
         self.car_path = []
         self.novelty = 0
@@ -36,16 +38,18 @@ class VehicleSolution:
         Returns:
           The fitness of the individual.
         """
-        map = Map(self.map_size)
-        self.road_points = map.get_points_from_states(self.states)
-        road = self.road_points
-        if len(self.road_points) <= 2:
+        test_map = Map(self.map_size)
+        car = Car(self.speed, self.steer_ang, self.map_size)
+        road_points = test_map.get_points_from_states(self.states)
+        if len(road_points) <= 2:
             self.fitness = 0
         else:
-            self.intp_points = self.car.interpolate_road(road)
-            self.fitness, self.car_path = self.car.execute_road(
-                self.intp_points
-            )  # evaluate(self.intp_points)#
+            intp_points = car.interpolate_road(road_points)
+            self.fitness, self.car_path = car.execute_road(
+                intp_points
+            )
+
+        self.road_points = road_points
 
         return self.fitness
 
@@ -66,10 +70,10 @@ class VehicleSolution:
         if state1[0] == state2[0]:
             similarity += 1
             if state1[0] == 0:
-                if abs(state1[1] - state2[1]) <= 10:
+                if abs(state1[1] - state2[1]) <= 2:
                     similarity += 1
             else:
-                if abs(state1[2] - state2[2]) <= 10:
+                if abs(state1[2] - state2[2]) <= 5:
                     similarity += 1
 
         return similarity
@@ -100,8 +104,8 @@ class VehicleSolution:
           save_path: The path to save the image to. Defaults to test.png
         """
         map_size = cf.vehicle_env["map_size"]
-        map = Map(map_size)
-        road_points = map.get_points_from_states(states)
+        test_map = Map(map_size)
+        road_points = test_map.get_points_from_states(states)
         speed = 9
         steer_ang = 12
         car = Car(speed, steer_ang, map_size)
@@ -117,7 +121,8 @@ class VehicleSolution:
 
         fitness, car_path = car.execute_road(intp_points)
 
-        if len(car_path):
+  
+        if len(car_path) > 0:
             ax.plot(car_path[0], car_path[1], "bo", label="Car path")
 
         ax.plot(road_x, road_y, "yo--", label="Road")
@@ -128,7 +133,7 @@ class VehicleSolution:
         ax.set_title("Test case fitenss " + str(fitness), fontsize=17)
 
         ax.set_ylim(bottom, top)
-
+        plt.ioff()
         ax.set_xlim(bottom, top)
         ax.legend()
         fig.savefig(save_path)

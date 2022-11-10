@@ -1,6 +1,8 @@
+
+import os
 from ambiegen.solutions.robot_solution import RobotSolution
 from ambiegen.solutions.vehicle_solution import VehicleSolution
-import os
+
 import config as cf
 
 
@@ -16,9 +18,9 @@ def save_tcs_images(test_suite, problem, run):
       run: the number of the runs
     """
 
-    if not (os.path.exists(cf.files["images_path"])):
+    if not os.path.exists(cf.files["images_path"]):
         os.makedirs(cf.files["images_path"])
-    if not (os.path.exists(os.path.join(cf.files["images_path"], "run" + str(run)))):
+    if not os.path.exists(os.path.join(cf.files["images_path"], "run" + str(run))):
         os.makedirs(os.path.join(cf.files["images_path"], "run" + str(run)))
 
     for i in range(len(test_suite)):

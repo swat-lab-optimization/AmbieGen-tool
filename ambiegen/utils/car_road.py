@@ -49,21 +49,6 @@ class Map:
 
         return pos, end
 
-    '''
-    def position_to_line(self, position):
-        """
-        It takes a list of two points and returns a list of three points
-        
-        Args:
-          position: the position of the line, which is a list of two points.
-        
-        Returns:
-          The x and y coordinates of the line.
-        """
-        x = [position[0][0], position[1][0], (position[0][0] + position[1][0]) / 2]
-        y = [position[0][1], position[1][1], (position[0][1] + position[1][1]) / 2]
-        return x, y
-    '''
 
     def position_to_center(self):
         """
@@ -415,5 +400,4 @@ class Map:
                 print("ERROR, invalid action")
 
         points = self.road_points_list[:-1]
-        self.road_points = points
         return points

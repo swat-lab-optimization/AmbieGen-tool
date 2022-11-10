@@ -1,10 +1,11 @@
-from datetime import datetime
-import json
-import config as cf
 import os
+import json
+from datetime import datetime
+
+import config as cf
 
 
-def save_tc_results(tc_stats, tcs):
+def save_tc_results(tc_stats, tcs, tcs_convergence):
     """
     It takes two arguments, tc_stats and tcs, and saves them as JSON files in the directories specified
     in the config file
@@ -24,14 +25,23 @@ def save_tc_results(tc_stats, tcs):
 
     with open(
         os.path.join(cf.files["stats_path"], dt_string + "-stats.json"), "w"
-    ) as f:
+    , encoding="utf-8") as f:
         json.dump(tc_stats, f, indent=4)
         print(
             "Stats saved as %s"
             % os.path.join(cf.files["stats_path"], dt_string + "-stats.json")
         )
 
-    with open(os.path.join(cf.files["tcs_path"], dt_string + "-tcs.json"), "w") as f:
+    with open(
+        os.path.join(cf.files["stats_path"], dt_string + "-conv.json"), "w", encoding="utf-8"
+    ) as f:
+        json.dump(tcs_convergence, f, indent=4)
+        print(
+            "Stats saved as %s"
+            % os.path.join(cf.files["stats_path"], dt_string + "-conv.json")
+        )
+
+    with open(os.path.join(cf.files["tcs_path"], dt_string + "-tcs.json"), "w", encoding= "utf-8") as f:
         json.dump(tcs, f, indent=4)
         print(
             "Test cases saved as %s"

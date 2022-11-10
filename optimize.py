@@ -2,6 +2,8 @@ from pymoo.termination import get_termination
 
 import config as cf
 from pymoo.optimize import minimize
+
+from ambiegen.utils.get_convergence import get_convergence
 from ambiegen import ALRGORITHMS
 from ambiegen.problems import PROBLEMS
 from ambiegen.samplers import SAMPLERS
@@ -15,10 +17,12 @@ from ambiegen.utils.save_tcs_images import save_tcs_images
 
 
 def main(problem, algo, runs_number, save_results=True, save_images=True):
+    """
+    Function for running the optimization and saving the results"""
 
-
+    n_offsprings = cf.ga["pop_size"]
     algorithm = ALRGORITHMS[algo](
-        n_offsprings=cf.ga["pop_size"],
+        n_offsprings=n_offsprings,
         pop_size=cf.ga["pop_size"],
         sampling=SAMPLERS[problem](),
         crossover=OPERATORS[problem + "_crossover"](cf.ga["cross_rate"]),
@@ -26,10 +30,12 @@ def main(problem, algo, runs_number, save_results=True, save_images=True):
         eliminate_duplicates=DuplicateElimination(),
     )
 
-    termination = get_termination("n_gen", cf.ga["n_gen"])
+    #termination = get_termination("n_gen", cf.ga["n_gen"])
+    termination = get_termination("n_eval", 65100)
 
     tc_stats = {}
     tcs = {}
+    tcs_convergence = {}
     for m in range(runs_number):
         print("Run: ", m)
         seed = get_random_seed()
@@ -41,7 +47,7 @@ def main(problem, algo, runs_number, save_results=True, save_images=True):
             seed=seed,
             verbose=True,
             save_history=True,
-            eliminate_duplicates=True,
+            eliminate_duplicates=True
         )
 
         print("Execution time, sec ", res.exec_time)
@@ -49,16 +55,19 @@ def main(problem, algo, runs_number, save_results=True, save_images=True):
         test_suite = get_test_suite(res)
         tc_stats["run" + str(m)] = get_stats(res, problem)
         tcs["run" + str(m)] = test_suite
+        tcs_convergence["run" + str(m)] = get_convergence(res, n_offsprings)
+
 
         if save_results:
-            save_tc_results(tc_stats, tcs)
+            save_tc_results(tc_stats, tcs, tcs_convergence)
         if save_images:
             save_tcs_images(test_suite, problem, m)
 
 
 ################################## MAIN ########################################
 problem = "vehicle"
-algo = "ga"
-runs_number = 1
+algo = "nsga2"
+runs_number = 30
 if __name__ == "__main__":
     main(problem, algo, runs_number)
+

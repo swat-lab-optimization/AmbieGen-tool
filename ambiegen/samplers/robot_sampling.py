@@ -39,24 +39,25 @@ def generate_random_solution(grid_size, robot_radius, sx, sy, gx, gy):
         rx, ry, _ = a_star.planning(sx, sy, gx, gy)
         path_size = len(rx)
 
-    return states
+    return states, -path_size
 
 
 class RobotSampling(Sampling):
+    """
+    Module to sample the initial population
+    """
     def _do(self, problem, n_samples, **kwargs):
         """
         This is a function to generate the initial population of the algorithm
 
         returns: a tensor of candidate solutions
         """
-
         X = np.full((n_samples, 1), None, dtype=np.object)
-
         for i in range(n_samples):
             s = RobotSolution()
-            states = generate_random_solution(
+            states, fitness = generate_random_solution(
                 s.grid_size, s.robot_radius, s.sx, s.sy, s.gx, s.gy)
             s.states = states
+            s.fitness = fitness
             X[i, 0] = s
-
         return X

@@ -1,10 +1,16 @@
+
+import random as rm
 import numpy as np
 from pymoo.core.crossover import Crossover
+
 from ambiegen.solutions import RobotSolution
-import random as rm
+
 
 # this is the crossover operator for the robot problem
 class RobotCrossover(Crossover):
+    """
+    Class to define the crossover operator for the robot problem
+    """
     def __init__(self, cross_rate):
 
         # define the crossover: number of parents and number of offsprings
@@ -13,13 +19,12 @@ class RobotCrossover(Crossover):
 
     def _do(self, problem, X, **kwargs):
         # The input of has the following shape (n_parents, n_matings, n_var)
-        _, n_matings, n_var = X.shape
+        _, n_matings, _ = X.shape
         # The output owith the shape (n_offsprings, n_matings, n_var)
 
         Y = np.full_like(X, None, dtype=np.object)
 
         # for each mating provided
-
         for k in range(n_matings):
             r = np.random.random()
 
@@ -27,11 +32,11 @@ class RobotCrossover(Crossover):
 
             if r < self.cross_rate:
 
-                tc_a = s_a.states
-                tc_b = s_b.states
+                tc_a = s_a.states.copy()
+                tc_b = s_b.states.copy()
 
                 # select a random point to crossover
-                crossover_point = rm.randint(1, len(tc_b) - 1)
+                crossover_point = rm.randint(5, len(tc_b) - 5)
 
                 off_a = RobotSolution()
                 off_b = RobotSolution()

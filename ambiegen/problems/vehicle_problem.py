@@ -18,10 +18,9 @@ class VehicleProblem1Obj(ElementwiseProblem):
         :param out: the fitness of the individual as well as the constraint
         """
         s = x[0]
-
-        s.eval_fitness()
+        s.fitness = s.eval_fitness()
         out["F"] = s.fitness
-        out["G"] = 7 - s.fitness * (-1)
+        out["G"] = 5 - s.fitness * (-1)
 
 
 class VehicleProblem2Obj(ElementwiseProblem):
@@ -41,13 +40,11 @@ class VehicleProblem2Obj(ElementwiseProblem):
         :param out: the fitness and novelty of the individual as well as the constraint
         """
         s = x[0]
-#        s.get_points_from_states()
-
-        s.eval_fitness()
+        s.fitness = s.eval_fitness()
         algorithm = kwargs["algorithm"]
 
         solutions = algorithm.pop.get("X")
-        if solutions.size > 0:
+        if (solutions.size > 0) and (s.fitness < -1):
             top_solutions = solutions[0:5]
             best_scenarios = [top_solutions[i]
                               [0].states for i in range(len(top_solutions))]
@@ -61,4 +58,4 @@ class VehicleProblem2Obj(ElementwiseProblem):
             s.novelty = 0
 
         out["F"] = [s.fitness, s.novelty]
-        out["G"] = 7 - s.fitness * (-1)
+        out["G"] =  5 - s.fitness * (-1)

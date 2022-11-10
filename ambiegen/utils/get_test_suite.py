@@ -1,5 +1,5 @@
-import numpy as np
 
+import config as cf
 
 def get_test_suite(res):
     """
@@ -14,7 +14,7 @@ def get_test_suite(res):
     test_suite = {}
     gen = len(res.history) - 1
 
-    for i in range(30):
+    for i in range(cf.ga["test_suite_size"]):
         result = res.history[gen].pop.get("X")[i][0]
         states = result.states
         new_states = []

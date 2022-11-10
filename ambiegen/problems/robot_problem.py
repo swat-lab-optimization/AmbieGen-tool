@@ -2,6 +2,9 @@ from pymoo.core.problem import ElementwiseProblem
 
 
 class RobotProblem2Obj(ElementwiseProblem):
+    '''
+    A class to define the two objective problem for the robot.
+    '''
     def __init__(self):
         super().__init__(n_var=1, n_obj=2, n_ieq_constr=1)
 
@@ -37,10 +40,13 @@ class RobotProblem2Obj(ElementwiseProblem):
 
         out["F"] = [s.fitness, s.novelty]
         # put a constraint on the fitness to be bigger than 140
-        out["G"] = 140 - s.fitness * (-1)
+        out["G"] = 150 - s.fitness * (-1)
 
 
 class RobotProblem1Obj(ElementwiseProblem):
+    '''
+    A class to define the single objective problem for the robot.
+    '''
     def __init__(self):
         super().__init__(n_var=1, n_obj=1, n_ieq_constr=1)
 
@@ -53,4 +59,4 @@ class RobotProblem1Obj(ElementwiseProblem):
         s = x[0]
         s.eval_fitness()
         out["F"] = s.fitness
-        out["G"] = 140 - s.fitness * (-1)
+        out["G"] = 150 - s.fitness * (-1)

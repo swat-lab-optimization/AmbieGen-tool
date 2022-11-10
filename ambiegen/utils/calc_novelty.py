@@ -1,6 +1,6 @@
+
 from ambiegen.solutions import VehicleSolution
 from ambiegen.solutions import RobotSolution
-import config as cf
 
 
 def calc_novelty(state1, state2, problem):

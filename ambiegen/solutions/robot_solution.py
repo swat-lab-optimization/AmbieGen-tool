@@ -22,6 +22,8 @@ class RobotSolution:
         self.sy = 1  # [m]
         self.gx = cf.robot_env["map_size"] - 2  # [m]
         self.gy = cf.robot_env["map_size"] - 2  # [m]
+        self.robot_path_x = []
+        self.robot_path_y = []
 
         self.grid_size = 1  # [m]
         self.robot_radius = 0.1  # [m]
@@ -83,7 +85,7 @@ class RobotSolution:
         similarity = 0
         state_num = min(len(tc1), len(tc2))
 
-        total_states = state_num * cf.robot_env["elem_types"]
+        total_states = state_num * 3#cf.robot_env["elem_types"]
         for i in range(state_num):
             similarity += self.compare_states(tc1[i], tc2[i])
 

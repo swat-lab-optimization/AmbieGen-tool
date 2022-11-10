@@ -1,11 +1,11 @@
 
-ga = {"pop_size": 100, "n_gen": 200, "mut_rate": 0.4, "cross_rate": 1}
+ga = {"pop_size": 150, "n_gen": 50, "mut_rate": 0.4, "cross_rate": 0.9, "test_suite_size": 30}
 files = {"stats_path": "stats", "tcs_path": "tcs", "images_path": "images"}
 
 
 vehicle_env = {
     "map_size": 200,
-    "elem_types": 3,
+    "elem_types": 2,
     "min_len": 5,  # minimal possible distance in meters
     "max_len": 30,  # maximal possible disance to go straight in meters
     "min_angle": 10,  # minimal angle of rotation in degrees

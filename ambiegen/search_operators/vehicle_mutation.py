@@ -1,8 +1,7 @@
-import numpy as np
-from pymoo.core.mutation import Mutation
 import copy
+from pymoo.core.mutation import Mutation
+import numpy as np
 import config as cf
-
 
 class VehicleMutation(Mutation):
     """
@@ -14,6 +13,7 @@ class VehicleMutation(Mutation):
         self.mut_rate = mut_rate
 
     def _do(self, problem, X, **kwargs):
+
         for i in range(len(X)):
             r = np.random.random()
             s = X[i, 0]
@@ -23,43 +23,42 @@ class VehicleMutation(Mutation):
                 sn = copy.deepcopy(s)
 
                 wr = np.random.random()
-                child = sn.states
-
-                old_states = child
-
+                child = copy.deepcopy(sn.states)
                 # exchnage mutation operator, exchange two random states
+                n = np.random.randint(1, 4)
                 if wr < 0.5:
-
-                    candidates = list(np.random.randint(0, high=len(child), size=2))
-                    temp = child[candidates[0]]
-                    child[candidates[0]] = child[(candidates[1])]
-                    child[(candidates[1])] = temp
-
+                    while n > 0:
+                        candidates = list(np.random.randint(0, high=len(child)-1, size=2))
+                        temp = child[candidates[0]].copy()
+                        child[candidates[0]] = child[(candidates[1])]
+                        child[(candidates[1])] = temp
+                        n -= 1
                 # change of value operator, change the value of one of the attributes of a random state
-                else:
-                    num = np.random.randint(0, high=len(child))
+                else:#if wr < 0.9:
+                    while n > 0:
+                        num = np.random.randint(0, high=len(child)-1)
+                        if child[(num)][0] == 0:
+                            child[(num)][0] = np.random.choice([1, 2])
 
-                    if child[(num)][0] == 0:
-                        child[(num)][0] = np.random.choice([1, 2])
+                        elif child[(num)][0] == 1:
+                            child[(num)][0] = np.random.choice([0, 2])
 
-                    elif child[(num)][0] == 1:
-                        child[(num)][0] = np.random.choice([0, 2])
-                    elif child[(num)][0] == 2:
-                        child[(num)][0] = np.random.choice([0, 1])
+                        elif child[(num)][0] == 2:
+                            child[(num)][0] = np.random.choice([0, 1])
 
-                    if child[(num)][0] == 0:
-                        value_list = np.arange(
-                            cf.vehicle_env["min_len"], cf.vehicle_env["max_len"], 1
-                        )
-                        child[num][1] = int(np.random.choice(value_list))
-                    else:
-                        value_list = np.arange(
-                            cf.vehicle_env["min_angle"], cf.vehicle_env["max_angle"], 5
-                        )
-                        child[num][2] = int(np.random.choice(value_list))
+                        if child[(num)][0] == 0:
+                            value_list = np.arange(
+                                cf.vehicle_env["min_len"], cf.vehicle_env["max_len"], 2
+                            )
+                            child[num][1] = int(np.random.choice(value_list))
+                        else:
+                            value_list = np.arange(
+                                cf.vehicle_env["min_angle"], cf.vehicle_env["max_angle"], 5
+                            )
+                            child[num][2] = int(np.random.choice(value_list))
+                        n -= 1
 
-                sn.states = child
-
+                sn.states = child.copy()
                 X[i, 0] = sn
 
         return X

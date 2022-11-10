@@ -1,7 +1,5 @@
-from time import time
-import numpy as np
 import math as m
-from shapely.geometry import Point
+import numpy as np
 
 from scipy.interpolate import splprep, splev
 from shapely.geometry import LineString, Point
@@ -21,6 +19,15 @@ class Car:
         self.map_size = map_size
         self.str_ang = steer_ang
         self.str_ang_o = steer_ang
+        self.x = 0
+        self.y = 0
+        self.distance = 0
+        self.angle = 0
+        self.tot_x = []
+        self.tot_y = []
+        self.tot_dist = []
+
+        
 
     def interpolate_road(self, road):
         """
@@ -179,17 +186,10 @@ class Car:
             self.x = 0
             self.y = 0
 
-            old_x_vals = [t[0] for t in nodes]
-            old_y_vals = [t[1] for t in nodes]
-
-            self.road_x = old_x_vals
-            self.road_y = old_y_vals
-
             self.angle = 0
             self.tot_x = []
             self.tot_y = []
             self.tot_dist = []
-            self.final_dist = []
             self.distance = 0
 
             mini_nodes1 = nodes[: round(len(nodes) / 2)]
@@ -262,7 +262,7 @@ class Car:
             fitness = max(self.tot_dist) * (-1)
 
             car_path = LineString(zip(self.tot_x, self.tot_y))
-            if car_path.is_simple == False:
+            if car_path.is_simple is False:
                 fitness = 0
 
         return fitness, [self.tot_x, self.tot_y]
@@ -439,6 +439,7 @@ def is_too_sharp(the_test, TSHD_RADIUS=47):
     """
     if TSHD_RADIUS > min_radius(the_test) > 0.0:
         check = True
+        #print("Too sharp")
     else:
         check = False
     return check
