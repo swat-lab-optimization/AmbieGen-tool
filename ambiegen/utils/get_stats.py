@@ -17,9 +17,13 @@ def get_stats(res, problem):
     res_dict = {}
     gen = len(res.history) - 1
     results = []
+    population = -res.history[gen].pop.get("F")
+    population = sorted(population, key=lambda x: x[0], reverse=True)
     for i in range(cf.ga["test_suite_size"]):
-        result = res.history[gen].pop.get("F")[i][0]
-        results.append(abs(result))
+
+
+        #result = res.history[gen].pop.get("F")[i][0]
+        results.append(population[i][0])
 
     gen = len(res.history) - 1
     novelty_list = []

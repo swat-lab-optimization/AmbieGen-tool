@@ -1,18 +1,18 @@
 import argparse
-from pymoo.termination import get_termination
-from pymoo.optimize import minimize
 
+from pymoo.optimize import minimize
+from pymoo.termination import get_termination
 
 import config as cf
-from ambiegen.utils.get_convergence import get_convergence
 from ambiegen import ALRGORITHMS
+from ambiegen.duplicate_elimination.duplicate_rem import DuplicateElimination
 from ambiegen.problems import PROBLEMS
 from ambiegen.samplers import SAMPLERS
 from ambiegen.search_operators import OPERATORS
-from ambiegen.duplicate_elimination.duplicate_rem import DuplicateElimination
-from ambiegen.utils.random_seed import get_random_seed
+from ambiegen.utils.get_convergence import get_convergence
 from ambiegen.utils.get_stats import get_stats
 from ambiegen.utils.get_test_suite import get_test_suite
+from ambiegen.utils.random_seed import get_random_seed
 from ambiegen.utils.save_tc_results import save_tc_results
 from ambiegen.utils.save_tcs_images import save_tcs_images
 
@@ -46,7 +46,6 @@ def main(problem, algo, runs_number, save_results):
     print("Number of generations: ", cf.ga["n_gen"])
     print("Population size: ", cf.ga["pop_size"])
 
-    
     n_offsprings = cf.ga["pop_size"]
     algorithm = ALRGORITHMS[algo](
         n_offsprings=n_offsprings,
@@ -55,10 +54,11 @@ def main(problem, algo, runs_number, save_results):
         crossover=OPERATORS[problem + "_crossover"](cf.ga["cross_rate"]),
         mutation=OPERATORS[problem + "_mutation"](cf.ga["mut_rate"]),
         eliminate_duplicates=DuplicateElimination(),
+        n_points_per_iteration=n_offsprings
     )
 
-    termination = get_termination("n_gen", cf.ga["n_gen"])
-    #termination = get_termination("n_eval", 65100)
+    #termination = get_termination("n_gen", cf.ga["n_gen"])
+    termination = get_termination("n_eval", 1000)
 
     tc_stats = {}
     tcs = {}
@@ -82,8 +82,9 @@ def main(problem, algo, runs_number, save_results):
         test_suite = get_test_suite(res)
         tc_stats["run" + str(m)] = get_stats(res, problem)
         tcs["run" + str(m)] = test_suite
+        #if algo == "random":
+        #    n_offsprings = 100
         tcs_convergence["run" + str(m)] = get_convergence(res, n_offsprings)
-
 
         if save_results:
             save_tc_results(tc_stats, tcs, tcs_convergence)
