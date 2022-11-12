@@ -34,5 +34,5 @@ def save_tcs_images(test_suite, problem, run, algo):
         elif problem == "vehicle":
             VehicleSolution.build_image(test_suite[str(i)], path)
     print(
-        "Images saved in %s" % os.path.join(path, "run" + str(run))
+        "Images saved in %s" % images_path
     )

@@ -92,7 +92,6 @@ def main(stats_path, stats_names):
         dfs[i] = pd.DataFrame(data=data)
         dfs[i]["mean"] = dfs[i].mean(axis=1)
         dfs[i]["std"] = dfs[i].std(axis=1)
-        print(dfs[i].head())
     
     plot_convergence(dfs, stats_names)
 
@@ -116,8 +115,5 @@ if __name__ == "__main__":
     arguments = parse_arguments()
     stats_path = arguments.stats_path
     stats_names = arguments.stats_names
-
-    print(stats_path)
-    print(stats_names)
 
     main(stats_path, stats_names)
