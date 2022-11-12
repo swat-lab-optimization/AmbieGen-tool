@@ -57,8 +57,8 @@ def main(problem, algo, runs_number, save_results):
         n_points_per_iteration=n_offsprings
     )
 
-    #termination = get_termination("n_gen", cf.ga["n_gen"])
-    termination = get_termination("n_eval", 3000)
+    termination = get_termination("n_gen", cf.ga["n_gen"])
+    #termination = get_termination("n_eval", 3000)
 
     tc_stats = {}
     tcs = {}
@@ -82,13 +82,12 @@ def main(problem, algo, runs_number, save_results):
         test_suite = get_test_suite(res, algo)
         tc_stats["run" + str(m)] = get_stats(res, problem, algo)
         tcs["run" + str(m)] = test_suite
-        #if algo == "random":
-        #    n_offsprings = 100
+
         tcs_convergence["run" + str(m)] = get_convergence(res, n_offsprings)
 
         if save_results:
-            save_tc_results(tc_stats, tcs, tcs_convergence)
-            save_tcs_images(test_suite, problem, m)
+            save_tc_results(tc_stats, tcs, tcs_convergence, algo)
+            save_tcs_images(test_suite, problem, m, algo)
 
 
 ################################## MAIN ########################################

@@ -6,7 +6,7 @@ from ambiegen.solutions.vehicle_solution import VehicleSolution
 import config as cf
 
 
-def save_tcs_images(test_suite, problem, run):
+def save_tcs_images(test_suite, problem, run, algo):
     """
     It takes a test suite, a problem, and a run number, and then it saves the images of the test suite
     in the images folder
@@ -18,10 +18,12 @@ def save_tcs_images(test_suite, problem, run):
       run: the number of the runs
     """
 
-    if not os.path.exists(cf.files["images_path"]):
-        os.makedirs(cf.files["images_path"])
-    if not os.path.exists(os.path.join(cf.files["images_path"], "run" + str(run))):
-        os.makedirs(os.path.join(cf.files["images_path"], "run" + str(run)))
+    images_path = os.path.join(cf.files["images_path"], algo)
+
+    if not os.path.exists(images_path):
+        os.makedirs(images_path)
+    if not os.path.exists(os.path.join(images_path, "run" + str(run))):
+        os.makedirs(os.path.join(images_path, "run" + str(run)))
 
     for i in range(len(test_suite)):
 

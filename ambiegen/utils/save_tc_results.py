@@ -5,7 +5,7 @@ from datetime import datetime
 import config as cf
 
 
-def save_tc_results(tc_stats, tcs, tcs_convergence):
+def save_tc_results(tc_stats, tcs, tcs_convergence, algo):
     """
     It takes two arguments, tc_stats and tcs, and saves them as JSON files in the directories specified
     in the config file
@@ -18,10 +18,13 @@ def save_tc_results(tc_stats, tcs, tcs_convergence):
     now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y")
 
-    if not os.path.exists(cf.files["stats_path"]):
-        os.makedirs(cf.files["stats_path"])
-    if not os.path.exists(cf.files["tcs_path"]):
-        os.makedirs(cf.files["tcs_path"])
+    stats_path = os.path.join(cf.files["stats_path"], algo)
+    tcs_path = os.path.join(cf.files["tcs_path"], algo)
+
+    if not os.path.exists(stats_path):
+        os.makedirs(stats_path)
+    if not os.path.exists(tcs_path):
+        os.makedirs(tcs_path)
 
     with open(
         os.path.join(cf.files["stats_path"], dt_string + "-stats.json"), "w"
