@@ -1,5 +1,5 @@
 <p align="center">
-	<img height="500px" src="logo.png"/>
+	<img height="500px" src="images/logo.png"/>
 </p>
 <h1 align="center">
 	AmbieGen Autonomous System Testing Framework
@@ -87,7 +87,7 @@ The test cases are represented as a list of environmental elements, as outlined 
 Consider an example below. You can see a test case represented as a map with 5 obstacles. Each environmental element, which is 5x50 area of the map, contains only one obstacle. Obstalce position is defined as the x coordinate of its center.
 
     <p align="left">
-	<img height="170px" src="robot.png"/>
+	<img height="170px" src="images/robot.png"/>
     </p> 
 
     We can encode it as presented in the table below:
@@ -100,7 +100,7 @@ Consider an example below. You can see a test case represented as a map with 5 o
 
 * For the autonomous vehicle we have 3 attributes too: the type of the road segment (0 - straight, 1 - turning right, 2 - turning left segmets), the length of the straight road segment, the angle of the turn of the turining road segment. Below you can see an example of the test case, which is represented a road topology composed of 5 road segments. 
     <p align="left">
-    <img height="170px" src="vehicle.png"/>
+    <img height="170px" src="images/vehicle.png"/>
     </p> 
 
     We can encode it as presented in the table below:
