@@ -1,7 +1,7 @@
 
 import config as cf
 
-def get_test_suite(res):
+def get_test_suite(res, algo):
     """
     It takes the last generation of the population and returns a dictionary of 30 test cases
 
@@ -13,9 +13,10 @@ def get_test_suite(res):
     """
     test_suite = {}
     gen = len(res.history) - 1
-
+    
     population = res.history[gen].pop.get("X")
-    population = sorted(population, key=lambda x: abs(x[0].fitness), reverse=True)
+    if algo != "nsga2":
+        population = sorted(population, key=lambda x: abs(x[0].fitness), reverse=True)
     for i in range(cf.ga["test_suite_size"]):
         #result = res.history[gen].pop.get("X")[i][0]
         result = population[i][0]

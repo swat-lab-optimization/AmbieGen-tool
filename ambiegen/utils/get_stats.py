@@ -2,7 +2,7 @@ from itertools import combinations
 from ambiegen.utils.calc_novelty import calc_novelty
 import config as cf
 
-def get_stats(res, problem):
+def get_stats(res, problem, algo):
     """
     It takes the results of the optimization and returns a dictionary with the fitness, novelty, and
     convergence of the optimization
@@ -18,7 +18,8 @@ def get_stats(res, problem):
     gen = len(res.history) - 1
     results = []
     population = -res.history[gen].pop.get("F")
-    population = sorted(population, key=lambda x: x[0], reverse=True)
+    if algo != "nsga2":
+        population = sorted(population, key=lambda x: x[0], reverse=True)
     for i in range(cf.ga["test_suite_size"]):
 
 
@@ -27,9 +28,12 @@ def get_stats(res, problem):
 
     gen = len(res.history) - 1
     novelty_list = []
+    test_population = res.history[gen].pop.get("X")
+    if algo != "nsga2":
+        test_population = sorted(test_population, key=lambda x: abs(x[0].fitness), reverse=True)
     for i in combinations(range(0, cf.ga["test_suite_size"]), 2):
-        current1 = res.history[gen].pop.get("X")[i[0]]
-        current2 = res.history[gen].pop.get("X")[i[1]]
+        current1 = test_population[i[0]] #res.history[gen].pop.get("X")[i[0]]
+        current2 = test_population[i[1]] #res.history[gen].pop.get("X")[i[1]]
         nov = calc_novelty(current1[0].states, current2[0].states, problem)
         novelty_list.append(nov)
     novelty = sum(novelty_list) / len(novelty_list)

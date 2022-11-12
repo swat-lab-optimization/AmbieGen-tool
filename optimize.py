@@ -29,8 +29,8 @@ def parse_arguments():
     parser.add_argument('--algorithm', type=str, default="nsga2", help='Algorithm to use, possivle values: nsga2, ga, random')
     parser.add_argument('--runs', type=int, default=1, help='Number of runs')
     parser.add_argument('--save_results', type=str, default=True, help='Save results, possible values: True, False')
-    args = parser.parse_args()
-    return args
+    arguments = parser.parse_args()
+    return arguments
 
 
 
@@ -58,7 +58,7 @@ def main(problem, algo, runs_number, save_results):
     )
 
     #termination = get_termination("n_gen", cf.ga["n_gen"])
-    termination = get_termination("n_eval", 1000)
+    termination = get_termination("n_eval", 3000)
 
     tc_stats = {}
     tcs = {}
@@ -79,8 +79,8 @@ def main(problem, algo, runs_number, save_results):
 
         print("Execution time, sec ", res.exec_time)
 
-        test_suite = get_test_suite(res)
-        tc_stats["run" + str(m)] = get_stats(res, problem)
+        test_suite = get_test_suite(res, algo)
+        tc_stats["run" + str(m)] = get_stats(res, problem, algo)
         tcs["run" + str(m)] = test_suite
         #if algo == "random":
         #    n_offsprings = 100
