@@ -18,7 +18,7 @@ def save_tcs_images(test_suite, problem, run, algo):
       run: the number of the runs
     """
 
-    images_path = os.path.join(cf.files["images_path"], algo)
+    images_path = cf.files["images_path"] +  "_" + algo
 
     if not os.path.exists(images_path):
         os.makedirs(images_path)
@@ -27,12 +27,12 @@ def save_tcs_images(test_suite, problem, run, algo):
 
     for i in range(len(test_suite)):
 
-        path = os.path.join(cf.files["images_path"], "run" + str(run), str(i) + ".png")
+        path = os.path.join(images_path, "run" + str(run), str(i) + ".png")
         if problem == "robot":
             RobotSolution.build_image(test_suite[str(i)], path)
 
         elif problem == "vehicle":
             VehicleSolution.build_image(test_suite[str(i)], path)
     print(
-        "Images saved in %s" % os.path.join(cf.files["images_path"], "run" + str(run))
+        "Images saved in %s" % os.path.join(path, "run" + str(run))
     )

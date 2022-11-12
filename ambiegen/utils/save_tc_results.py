@@ -18,8 +18,8 @@ def save_tc_results(tc_stats, tcs, tcs_convergence, algo):
     now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y")
 
-    stats_path = os.path.join(cf.files["stats_path"], algo)
-    tcs_path = os.path.join(cf.files["tcs_path"], algo)
+    stats_path = cf.files["stats_path"] + "_" + algo
+    tcs_path = cf.files["tcs_path"] + "_" + algo
 
     if not os.path.exists(stats_path):
         os.makedirs(stats_path)
@@ -27,26 +27,26 @@ def save_tc_results(tc_stats, tcs, tcs_convergence, algo):
         os.makedirs(tcs_path)
 
     with open(
-        os.path.join(cf.files["stats_path"], dt_string + "-stats.json"), "w"
+        os.path.join(stats_path, dt_string + "-stats.json"), "w"
     , encoding="utf-8") as f:
         json.dump(tc_stats, f, indent=4)
         print(
             "Stats saved as %s"
-            % os.path.join(cf.files["stats_path"], dt_string + "-stats.json")
+            % os.path.join(stats_path, dt_string + "-stats.json")
         )
 
     with open(
-        os.path.join(cf.files["stats_path"], dt_string + "-conv.json"), "w", encoding="utf-8"
+        os.path.join(stats_path, dt_string + "-conv.json"), "w", encoding="utf-8"
     ) as f:
         json.dump(tcs_convergence, f, indent=4)
         print(
             "Stats saved as %s"
-            % os.path.join(cf.files["stats_path"], dt_string + "-conv.json")
+            % os.path.join(stats_path, dt_string + "-conv.json")
         )
 
-    with open(os.path.join(cf.files["tcs_path"], dt_string + "-tcs.json"), "w", encoding= "utf-8") as f:
+    with open(os.path.join(tcs_path, dt_string + "-tcs.json"), "w", encoding= "utf-8") as f:
         json.dump(tcs, f, indent=4)
         print(
             "Test cases saved as %s"
-            % os.path.join(cf.files["tcs_path"], dt_string + "-tcs.json")
+            % os.path.join(tcs_path, dt_string + "-tcs.json")
         )

@@ -51,7 +51,7 @@ def plot_boxplot(data_list, label_list, name, max_range):
     """
     Function for plotting the boxplot of the statistics of the algorithms"""
 
-    print(label_list)
+    #print(label_list)
 
     fig, ax1 = plt.subplots() #figsize=(8, 4)
     ax1.set_xlabel('Algorithm', fontsize=20)
@@ -92,6 +92,7 @@ def main(stats_path, stats_names):
         dfs[i] = pd.DataFrame(data=data)
         dfs[i]["mean"] = dfs[i].mean(axis=1)
         dfs[i]["std"] = dfs[i].std(axis=1)
+        print(dfs[i].head())
     
     plot_convergence(dfs, stats_names)
 
@@ -115,5 +116,8 @@ if __name__ == "__main__":
     arguments = parse_arguments()
     stats_path = arguments.stats_path
     stats_names = arguments.stats_names
+
+    print(stats_path)
+    print(stats_names)
 
     main(stats_path, stats_names)
