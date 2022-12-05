@@ -16,6 +16,7 @@ def save_tcs_images(test_suite, problem, run, algo):
     solution itself
       problem: the problem to be solved. Can be "robot" or "vehicle"
       run: the number of the runs
+        algo: the algorithm used to generate the test suite. Can be "random", "ga", "nsga2",
     """
 
     images_path = cf.files["images_path"] +  "_" + algo
