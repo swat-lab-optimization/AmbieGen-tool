@@ -1,5 +1,6 @@
 import copy
 from pymoo.core.mutation import Mutation
+import logging as log
 import numpy as np
 import config as cf
 
@@ -18,6 +19,7 @@ class RobotMutation(Mutation):
             r = np.random.random()
             s = X[i, 0]
             if r < self.mut_rate:
+                log.debug("Performing mutation on individual %s", s)
                 sn = copy.deepcopy(s)
                 wr = np.random.random()
                 child = copy.deepcopy(sn.states)
@@ -25,6 +27,7 @@ class RobotMutation(Mutation):
                 # exchnage mutation operator, exchange two random states
                 if wr < 0.5:
                     while n > 0:
+                        log.debug("Exchange mutation performed on individual %s", s)
                         candidates = list(np.random.randint(0, high=len(child), size=2))
                         temp = child[candidates[0]]
                         child[candidates[0]] = child[candidates[1]]
@@ -33,6 +36,7 @@ class RobotMutation(Mutation):
                 # change of value operator, change the value of one of the attributes of a random state
                 else:
                     while n > 0:
+                        log.debug("Change of value mutation performed on individual %s", s)
                         num = np.random.randint(0, high=len(child))
                         value = np.random.choice(["state", "value", "position"])
 

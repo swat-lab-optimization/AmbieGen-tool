@@ -1,7 +1,7 @@
+
+import logging as log
 import numpy as np
 from pymoo.core.sampling import Sampling
-
-
 import config as cf
 from ambiegen.utils.car_road import Map
 from ambiegen.utils.vehicle import Car
@@ -65,4 +65,5 @@ class VehicleSampling(Sampling):
             s.fitness = fitness
             X[i, 0] = s
 
+        log.debug("Initial population of %d solutions generated", n_samples)
         return X

@@ -1,6 +1,6 @@
 
 import numpy as np
-
+import logging as log
 class Map:
 
     """
@@ -191,5 +191,5 @@ class Map:
             elif action == 1:
                 self.vertical(int(state[1]), int(state[2]))
             else:
-                print("ERROR")
+                log.error("ERROR: Invalid action")
         return self.all_map_points

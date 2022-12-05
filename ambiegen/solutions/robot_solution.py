@@ -1,8 +1,11 @@
+
+import matplotlib.pyplot as plt
+from shapely.geometry import LineString
+
 import config as cf
 from ambiegen.utils.robot_map import Map
-import matplotlib.pyplot as plt
 from ambiegen.utils.a_star import AStarPlanner
-from shapely.geometry import LineString
+import logging as log
 
 
 class RobotSolution:

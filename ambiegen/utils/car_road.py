@@ -1,13 +1,10 @@
 #
-import random as rm
+
 import numpy as np
 import math as m
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-import matplotlib.pyplot as plt
-
-import time
-
+import logging as log
 
 class Map:
     """Class that conducts transformations to vectors automatically,
@@ -397,7 +394,7 @@ class Map:
                 if not (done):
                     break
             else:
-                print("ERROR, invalid action")
+                log.error("ERROR, invalid action")
 
         points = self.road_points_list[:-1]
         return points

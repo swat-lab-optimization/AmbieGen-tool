@@ -1,3 +1,4 @@
+import logging as log
 from pymoo.core.duplicate import ElementwiseDuplicateElimination
 
 # It's a duplicate elimination that compares the states of the two elements
@@ -14,4 +15,6 @@ class DuplicateElimination(ElementwiseDuplicateElimination):
 
         # Calculating the novelty of the two states.
         novelty = abs(a.X[0].calculate_novelty(state1, state2))
+        if novelty  < 0.1:
+            log.debug("Duplicate %s and %s found", a.X[0], b.X[0])
         return novelty < 0.1

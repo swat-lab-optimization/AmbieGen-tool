@@ -1,5 +1,6 @@
 
 import random as rm
+import logging as log
 import numpy as np
 from pymoo.core.crossover import Crossover
 
@@ -31,12 +32,14 @@ class RobotCrossover(Crossover):
             s_a, s_b = X[0, k, 0], X[1, k, 0]
 
             if r < self.cross_rate:
+                log.debug("Performing crossover on individuals %s and %s", s_a, s_b)
 
                 tc_a = s_a.states.copy()
                 tc_b = s_b.states.copy()
 
                 # select a random point to crossover
                 crossover_point = rm.randint(5, len(tc_b) - 5)
+                log.debug("Crossover point: %d", crossover_point)
 
                 off_a = RobotSolution()
                 off_b = RobotSolution()

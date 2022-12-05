@@ -1,5 +1,5 @@
 import time
-
+import logging as log
 
 def get_random_seed():
     """
@@ -16,5 +16,6 @@ def get_random_seed():
         + ((t & 0x0000FF00) << 8)
         + ((t & 0x000000FF) << 24)
     )
+
 
     return seed

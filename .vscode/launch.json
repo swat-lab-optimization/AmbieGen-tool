@@ -11,7 +11,7 @@
             "program": "optimize.py",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["--problem", "vehicle", "--algorithm", "random", "--runs", "2", "--save_results", "True"]
+            "args": ["--problem", "vehicle", "--algorithm", "nsga2", "--runs", "2", "--save_results", "True"]
         },
         {
             "name": "compare.py",

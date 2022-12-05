@@ -1,5 +1,6 @@
 
 import os
+import logging as log
 from ambiegen.solutions.robot_solution import RobotSolution
 from ambiegen.solutions.vehicle_solution import VehicleSolution
 
@@ -34,6 +35,6 @@ def save_tcs_images(test_suite, problem, run, algo):
 
         elif problem == "vehicle":
             VehicleSolution.build_image(test_suite[str(i)], path)
-    print(
-        "Images saved in %s" % images_path
+    log.info(
+        "Images saved in %s", images_path
     )

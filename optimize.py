@@ -1,7 +1,10 @@
 import argparse
+import sys
+import logging as log
 
 from pymoo.optimize import minimize
 from pymoo.termination import get_termination
+
 
 import config as cf
 from ambiegen import ALRGORITHMS
@@ -16,6 +19,36 @@ from ambiegen.utils.random_seed import get_random_seed
 from ambiegen.utils.save_tc_results import save_tc_results
 from ambiegen.utils.save_tcs_images import save_tcs_images
 
+def setup_logging(log_to, debug):
+    """
+    It sets up the logging system
+    """
+    #def log_exception(extype, value, trace):
+    #    log.exception('Uncaught exception:', exc_info=(extype, value, trace))
+
+    # Disable annoyng messages from matplot lib.
+    # See: https://stackoverflow.com/questions/56618739/matplotlib-throws-warning-message-because-of-findfont-python
+    #log.getLogger('matplotlib.font_manager').disabled = True
+
+    term_handler = log.StreamHandler()
+    log_handlers = [term_handler]
+    #term_handler.setLevel(log.INFO)
+    start_msg = "Started test generation"
+
+    if log_to is not None:
+        file_handler = log.FileHandler(log_to, 'w', 'utf-8')
+        #file_handler.setLevel(log.DEBUG)
+        log_handlers.append(file_handler)
+        start_msg += " ".join([", writing logs to file: ", str(log_to)])
+
+    log_level = log.DEBUG if debug else log.INFO
+
+    log.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',  level=log_level, handlers=log_handlers, force=True)
+
+    #sys.excepthook = log_exception
+
+    log.info(start_msg)
+
 
 def parse_arguments():
     '''
@@ -29,22 +62,29 @@ def parse_arguments():
     parser.add_argument('--algorithm', type=str, default="nsga2", help='Algorithm to use, possivle values: nsga2, ga, random')
     parser.add_argument('--runs', type=int, default=1, help='Number of runs')
     parser.add_argument('--save_results', type=str, default=True, help='Save results, possible values: True, False')
+    parser.add_argument('--seed', type=int, default=None, help='Random seed')
+    parser.add_argument('--debug', type=str, default=False, help='Run in debug mode, possible values: True, False')
+    
     arguments = parser.parse_args()
     return arguments
 
 
-
-def main(problem, algo, runs_number, save_results):
+def main(problem, algo, runs_number, save_results, random_seed, debug):
     """
     Function for running the optimization and saving the results"""
 
-    print("Running the optimization")
-    print("Problem: ", problem)
-    print("Algorithm: ", algo)
-    print("Runs number: ", runs_number)
-    print("Saving the results: ", save_results)
-    print("Number of generations: ", cf.ga["n_gen"])
-    print("Population size: ", cf.ga["pop_size"])
+    log_file = "logs.txt"
+
+
+
+    setup_logging(log_file, debug)
+
+    log.info("Running the optimization")
+    log.info("Problem: %s, Algorithm: %s, Runs number: %s, Saving the results: %s", problem, algo, runs_number, save_results)
+
+    if cf.ga["pop_size"] < cf.ga["test_suite_size"]:
+        log.error("Population size should be greater or equal to test suite size")
+        sys.exit(1)
 
     n_offsprings = cf.ga["pop_size"]
     algorithm = ALRGORITHMS[algo](
@@ -64,8 +104,14 @@ def main(problem, algo, runs_number, save_results):
     tcs = {}
     tcs_convergence = {}
     for m in range(runs_number):
-        print("Run: ", m)
-        seed = get_random_seed()
+        log.info("Executing run %d: ", m)
+        if random_seed is not None:
+            seed = random_seed
+        else:
+            seed = get_random_seed()
+
+        
+        log.info("Using random seed: %s", seed)
 
         res = minimize(
             PROBLEMS[problem + "_" + algo](),
@@ -77,7 +123,7 @@ def main(problem, algo, runs_number, save_results):
             eliminate_duplicates=True
         )
 
-        print("Execution time, sec ", res.exec_time)
+        log.info("Execution time, %f sec", res.exec_time)
 
         test_suite = get_test_suite(res, algo)
         tc_stats["run" + str(m)] = get_stats(res, problem, algo)
@@ -94,5 +140,5 @@ def main(problem, algo, runs_number, save_results):
 
 if __name__ == "__main__":
     args = parse_arguments()
-    main(args.problem, args.algorithm, args.runs, args.save_results)
+    main(args.problem, args.algorithm, args.runs, args.save_results, args.seed, args.debug)
 

@@ -1,3 +1,4 @@
+import logging as log
 from pymoo.core.problem import ElementwiseProblem
 
 
@@ -21,6 +22,8 @@ class VehicleProblem1Obj(ElementwiseProblem):
         s.fitness = s.eval_fitness()
         out["F"] = s.fitness
         out["G"] = 5 - s.fitness * (-1)
+
+        log.debug("Evaluated individual %s, fitness %s", s, s.fitness)
 
 
 class VehicleProblem2Obj(ElementwiseProblem):
@@ -59,3 +62,5 @@ class VehicleProblem2Obj(ElementwiseProblem):
 
         out["F"] = [s.fitness, s.novelty]
         out["G"] =  5 - s.fitness * (-1)
+
+        log.debug("Evaluated individual %s, fitness %s, novelty %s", s, s.fitness, s.novelty)

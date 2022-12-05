@@ -1,5 +1,6 @@
 
 import config as cf
+import logging as log
 
 def get_test_suite(res, algo):
     """
@@ -26,4 +27,5 @@ def get_test_suite(res, algo):
             new_states.append([int(x) for x in state])
         test_suite[str(i)] = new_states
 
+    log.info("Test suite of %d test scenarios generated", cf.ga["test_suite_size"])
     return test_suite

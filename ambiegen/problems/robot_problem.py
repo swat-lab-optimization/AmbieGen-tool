@@ -1,6 +1,6 @@
 from pymoo.core.problem import ElementwiseProblem
 
-
+import logging as log
 class RobotProblem2Obj(ElementwiseProblem):
     '''
     A class to define the two objective problem for the robot.
@@ -42,6 +42,9 @@ class RobotProblem2Obj(ElementwiseProblem):
         # put a constraint on the fitness to be bigger than 140
         out["G"] = 150 - s.fitness * (-1)
 
+        log.debug("Evaluated individual %s, fitness %s, novelty %s", s, s.fitness, s.novelty)
+        
+
 
 class RobotProblem1Obj(ElementwiseProblem):
     '''
@@ -60,3 +63,5 @@ class RobotProblem1Obj(ElementwiseProblem):
         s.eval_fitness()
         out["F"] = s.fitness
         out["G"] = 150 - s.fitness * (-1)
+
+        log.debug("Evaluated individual %s, fitness %s", s, s.fitness)

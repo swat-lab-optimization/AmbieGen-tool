@@ -312,7 +312,7 @@ def is_invalid_road(points):
     )
     return invalid
 
-
+# some of this code was taken from https://github.com/se2p/tool-competition-av
 def find_circle(p1, p2, p3):
     """
     The function takes three points and returns the radius of the circle that passes through them

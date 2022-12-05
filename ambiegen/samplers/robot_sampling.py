@@ -1,3 +1,4 @@
+import logging as log
 import numpy as np
 from pymoo.core.sampling import Sampling
 from ambiegen.solutions.robot_solution import RobotSolution
@@ -60,4 +61,6 @@ class RobotSampling(Sampling):
             s.states = states
             s.fitness = fitness
             X[i, 0] = s
+
+        log.debug("Initial population of %d solutions generated", n_samples)
         return X

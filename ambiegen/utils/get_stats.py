@@ -1,4 +1,5 @@
 from itertools import combinations
+import logging as log
 from ambiegen.utils.calc_novelty import calc_novelty
 import config as cf
 
@@ -38,6 +39,8 @@ def get_stats(res, problem, algo):
         novelty_list.append(nov)
     novelty = sum(novelty_list) / len(novelty_list)
 
+    log.info("The highest fitness found: %f", max(results))
+    log.info("Average diversity: %f", novelty)
     res_dict["fitness"] = results
     res_dict["novelty"] = novelty
 
