@@ -26,10 +26,6 @@ def setup_logging(log_to, debug):
     #def log_exception(extype, value, trace):
     #    log.exception('Uncaught exception:', exc_info=(extype, value, trace))
 
-    # Disable annoyng messages from matplot lib.
-    # See: https://stackoverflow.com/questions/56618739/matplotlib-throws-warning-message-because-of-findfont-python
-    #log.getLogger('matplotlib.font_manager').disabled = True
-
     term_handler = log.StreamHandler()
     log_handlers = [term_handler]
     #term_handler.setLevel(log.INFO)
