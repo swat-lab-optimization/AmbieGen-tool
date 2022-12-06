@@ -64,20 +64,28 @@ python optimize.py --problem vehicle --algo nsga2 --runs 10
 4. You can also change the parameters of optimization algorithm as well as the parameters of your problem and the system under test in the ```config.py``` file.  
 
 5. Running the script will start the search algorithms for test case generation and provide the output of the search process in the form of the number of evaluations done, constraint violations and best solutions found.
-6. At the output, a test suite of the 30 test cases will be generated and saved in the configured folder in the ```config.py``` file. The additional information about the test suite, such as the fitness of each test case, the average diversity of the solutions as well as well as the convergence of the solutions (best solution found at each generation) will also be saved.
-7. More information about the avalable options can be found in the [next section](https://github.com/swat-lab-optimization/AmbieGen-tool#options-and-parameters).
+6. At the output, a test suite of the *N* test cases (30 by default) will be generated and saved in the folder configured in the ```config.py``` file. The additional information about the test suite, such as the fitness of each test case, the average diversity of the solutions as well as well as the convergence of the solutions (best solution found at each generation) will also be saved. By default the name of the algorith is added to the folder name, so you do not have to rename the folder if you run a different algorithm.
+7. We can also compare the results produced by the two different search
+algorithms via executing the following command:
+```
+python compare.py --stats_path="stats_nsga2" "stats_random" --stats_names "NSGA-II" "Random"
+```
+In the *stats_path* argument we specify the paths of the metadata for the
+runs we wish to compare and in the *stats_names* the names we assign for the
+runs
+8. More information about the avalable options can be found in the [next section](https://github.com/swat-lab-optimization/AmbieGen-tool#options-and-parameters).
 
 ## Options and parameters
-1. In the ```optimize.py``` file you can specify the system under test, the algorithm to use and the number of runs to perform. 
-Currently AmbieGen supports the following systems under test:
-- ```robot``` - autonomous robot, naviagting in a closed room with obstacles. Obstacles are represented as vertical and horizontal walls.
-- ```vehicle``` - autonomous vehicle that is driving on two lane road. The goal is to test the vehicle Lane Keeping Assist System (LKAS) to ensure that the vehicle stays in the lane given a valid road topology.  
+1. Currently AmbieGen supports the following systems under test:
+- ```robot``` - autonomous robot, navigating in a closed room with obstacles. Test scenario for this system is represented as map with obstacles i.e. vertical and horizontal walls.
+- ```vehicle``` - autonomous vehicle that is driving on two lane road. The goal is to test the vehicle Lane Keeping Assist System (LKAS) to ensure that the vehicle stays in the lane given a valid road topology.  The test scenario for this system is represented as sequence of points defining the road topology.
 
     To set one of the systems under test, you can change the ```problem``` variable in the ```main``` function:
 
     AmbieGen also supports the following algorithms:
 - ```ga``` - a singe-objective genetic algorithm, where the fitness is defined by the performace of the simplified model of the system under test on a given test case. The worse the performance, the better the fitness.
 - ```nsga2``` - a multi-objective genetic algorithm, where the first fitness function is defined by the performace of the simplified model of the system under test on a given test case and the second - by diversity of the test case, compared to the diversity of the 5 best solutions found.
+- ```random``` - a random search algorithm.
 
     The implementation of these algorithms is based on the [Pymoo framework](https://pymoo.org/).
 
@@ -87,11 +95,11 @@ Currently AmbieGen supports the following systems under test:
 
 2. In the ```config.py``` file you can specify the parameters of algorithm in the ```ga``` section, as in the example:
     ```python
-    ga = {"pop_size": 50, "n_gen": 50, "mut_rate": 0.4, "cross_rate": 1}
+    ga = {"pop_size": 150, "n_gen": 200, "mut_rate": 0.4, "cross_rate": 0.9, "test_suite_size": 30}
     ```
-    Here the ```population size``` is set to 50, the ```number of generations``` to 50, the ```mutation rate``` to 0.4 and the ```crossover rate``` to 1.
+    Here the ```population size``` is set to 150, the ```number of generations``` to 200, the ```mutation rate``` to 0.4 and the ```crossover rate``` to 0.9.
 
-    In the ```vehicle_env``` and ```robot_env``` sections you can specify the parameters of the system under test, such as the map size, the minimal and the maximal possible values of the attributes. An important parameter is ```elem_types``` which is used to calculate the novelty. It specifies the number of environmental elements types. For example, for autonomous vehicle we have 3 types of road segments: straight, left and right. So the ```elem_types``` is set to 3. For the robot we only have two types of elements: horizontal and vertical walls. So the ```elem_types``` is set to 2.
+    In the ```vehicle_env``` and ```robot_env``` sections you can specify the parameters of the system under test, such as the map size, the minimal and the maximal possible values of the attributes. An important parameter is ```elem_types``` which is used to calculate the novelty. It specifies the number of environmental elements types. For example, for autonomous vehicle we have 3 types of road segments: straight, left and right. So the ```elem_types``` is set to 3. 
 
     In the ```files``` section you can specifie the folders to save the output files such as the statistics about the generated test cases (```stats_path```), the generated test cases (```tcs_path```) and the images of the generated test cases (```images_path```).
 
