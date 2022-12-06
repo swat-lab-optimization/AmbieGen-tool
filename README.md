@@ -46,7 +46,7 @@ pip install -r requirements.txt
     ``` 
 2. By default a one run of test case generation for autonomous vehicles with NSGA-II will be completed.
 2. You may want to change the paramenters of the problem, such as the type of the system under test, the algorithm to use and the number of runs to perform. To do so, you can provide the argumets to the script. All the available arguments are listed in the table below:
-
+<center>
 
 | Argument      | Description                      | Possible values |
 | :-------------: |:-------------------------------: | :---------------:|
@@ -56,6 +56,8 @@ pip install -r requirements.txt
 | save_results | whether to save results data and images     |  True, False (default=True) |
 | seed | random seed value    |  an integer value (default=None)|
 |debug | whether to print debug data to the log file    |  True, False (default=False)|
+
+</center>
 
 3. Here is an example of how to run the script with the arguments. In this example, the script will run the NSGA-II algorithm for 10 times for the vehicle problem and save the results.
 ```
@@ -70,9 +72,12 @@ algorithms via executing the following command:
 ```
 python compare.py --stats_path="stats_nsga2" "stats_random" --stats_names "NSGA-II" "Random"
 ```
+
 In the *stats_path* argument we specify the paths of the metadata for the
 runs we wish to compare and in the *stats_names* the names we assign for the
 runs
+
+
 8. More information about the avalable options can be found in the [next section](https://github.com/swat-lab-optimization/AmbieGen-tool#options-and-parameters).
 
 ## Options and parameters
