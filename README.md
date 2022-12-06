@@ -50,20 +50,22 @@ pip install -r requirements.txt
 
 | Argument      | Description                      | Possible values |
 | :-------------: |:-------------------------------: | :---------------:|
-| problem      |test scenario generation problem | robot, vehicle, default=vehicle |
-| algo      | test sceanrio generation algorithm | ga, nsga2, random, default=nsga2 |
-| runs | number of times to run the algorithm      |  an integer value, default=1 |
-| save_results | whether to save results data and images     |  True, False, default=True |
-| seed | random seed value    |  an integer value, default=None|
-|debug | whether to print debug data to the log file    |  True, False, default=False|
+| problem      |test scenario generation problem | robot, vehicle (default=vehicle) |
+| algo      | test sceanrio generation algorithm | ga, nsga2, random (default=nsga2) |
+| runs | number of times to run the algorithm      |  an integer value (default=1) |
+| save_results | whether to save results data and images     |  True, False (default=True) |
+| seed | random seed value    |  an integer value (default=None)|
+|debug | whether to print debug data to the log file    |  True, False (default=False)|
 
-Here is an example of how to run the script with the arguments. In this example, the script will run the NSGA-II algorithm for 10 times for the vehicle problem and save the results.
-```python optimize.py --problem vehicle --algo nsga2 --runs 10 --save_results True --seed 123 --debug True```
-3. You can also change the parameters of optimization algorithm as well as the parameters of your problem and the system under test in the ```config.py``` file.  
+3. Here is an example of how to run the script with the arguments. In this example, the script will run the NSGA-II algorithm for 10 times for the vehicle problem and save the results.
+```
+python optimize.py --problem vehicle --algo nsga2 --runs 10
+```
+4. You can also change the parameters of optimization algorithm as well as the parameters of your problem and the system under test in the ```config.py``` file.  
 
-4. Running the script will start the search algorithms for test case generation and provide the output of the search process in the form of the number of evaluations done, constraint violations and best solutions found.
-5. At the output, a test suite of the 30 test cases will be generated and saved in the configured folder in the ```config.py``` file. The additional information about the test suite, such as the fitness of each test case, the average diversity of the solutions as well as well as the convergence of the solutions (best solution found at each generation) will also be saved.
-6. More information about the avalable options can be found in the [next section](https://github.com/swat-lab-optimization/AmbieGen-tool#options-and-parameters).
+5. Running the script will start the search algorithms for test case generation and provide the output of the search process in the form of the number of evaluations done, constraint violations and best solutions found.
+6. At the output, a test suite of the 30 test cases will be generated and saved in the configured folder in the ```config.py``` file. The additional information about the test suite, such as the fitness of each test case, the average diversity of the solutions as well as well as the convergence of the solutions (best solution found at each generation) will also be saved.
+7. More information about the avalable options can be found in the [next section](https://github.com/swat-lab-optimization/AmbieGen-tool#options-and-parameters).
 
 ## Options and parameters
 1. In the ```optimize.py``` file you can specify the system under test, the algorithm to use and the number of runs to perform. 
