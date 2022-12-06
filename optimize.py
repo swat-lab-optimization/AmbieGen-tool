@@ -101,7 +101,7 @@ def main(problem, algo, runs_number, save_results, random_seed, debug):
     tcs_convergence = {}
     for m in range(runs_number):
         log.info("Executing run %d: ", m)
-        if random_seed is not None:
+        if (random_seed is not None) and (m == 0):
             seed = random_seed
         else:
             seed = get_random_seed()

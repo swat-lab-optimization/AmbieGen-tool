@@ -10,10 +10,12 @@
 </p>
 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/swat-lab-optimization/AmbieGen-tool/issues)
-  [![HitCount](https://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool.svg?style=flat-square&show=unique)](http://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool)
 ![Code Grade](https://api.codiga.io/project/34688/score/svg)
 ![Code Grade](https://api.codiga.io/project/34688/status/svg)
-
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fswat-lab-optimization%2FAmbieGen-tool&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<!--
+  [![HitCount](https://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool.svg?style=flat-square&show=unique)](http://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool) -->
 The framework, along with some initial results, is covered in the paper [A search-based framework for automatic generation of testing environments for cyber–physical systems](https://www.sciencedirect.com/science/article/pii/S0950584922000866). This paper should be cited if code from this project is used in any way:
 ```
 @article{HUMENIUK2022106936,
@@ -29,15 +31,30 @@ author = {Dmytro Humeniuk and Foutse Khomh and Giuliano Antoniol}
 ```
 ## Installation
 1. Clone this repository to your local machine.
-2. To install the dependencies needed to use the project, run `pip install -r requirements.txt` from inside the repository folder. Python 3.8 + is required.
+2. To install the dependencies needed to use the project, run  
+```
+pip install -r requirements.txt
+```  
+
+ from inside the repository folder. Python 3.8 + is required.
 3. Now AmbieGen is ready to use. Check the [following section](https://github.com/swat-lab-optimization/AmbieGen-tool#usage) on how to use it.
 
 ## Usage
-1. You can start the test case generation process by running from inside the repository: 
+1. You can start the test case generation process by running from inside the repository the ```optimize.py``` module: 
     ```
-    python optimize.py
+    python optimize.py 
     ``` 
-2. Before running the script, you may want to change the paramenters of the problem, such as the type of the system under test, the algorithm to use and the number of runs to perform. To do so, you can change the input parameters of the `main` function in the `optimize.py` file.
+2. By default a one run of test case generation for autonomous vehicles with NSGA-II will be completed.
+2. You may want to change the paramenters of the problem, such as the type of the system under test, the algorithm to use and the number of runs to perform. To do so, you can provide the argumets to the script. All the available arguments are listed in the table below:
+
+| Argument      | Description                      | Possible values |
+| ------------- |:-------------------------------: | ---------------:|
+| problem      |test scenario generation problem | robot, vehicle |
+| algo      | test sceanrio generation algorithm | ga, nsga2, random |
+| runs | number of times to run the algorithm      |  an integer value |
+| save_results | whether to save results data and images     |  True, False |
+| seed | Random seed value    |  an integer value|
+|debug | Whether to print debug data to the log file    |  True, False|
 You can also change the parameters of optimization algorithm as well as the parameters of your problem and the system under test in the ```config.py``` file.  
 Here's of how to configure the tool to run the test case generation for autonomous robot using the NSGA-II algorithm:
     ```python
