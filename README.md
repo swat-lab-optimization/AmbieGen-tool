@@ -47,14 +47,16 @@ pip install -r requirements.txt
 2. By default a one run of test case generation for autonomous vehicles with NSGA-II will be completed.
 2. You may want to change the paramenters of the problem, such as the type of the system under test, the algorithm to use and the number of runs to perform. To do so, you can provide the argumets to the script. All the available arguments are listed in the table below:
 
+
 | Argument      | Description                      | Possible values |
-| ------------- |:-------------------------------: | ---------------:|
+| :-------------: |:-------------------------------: | :---------------:|
 | problem      |test scenario generation problem | robot, vehicle |
 | algo      | test sceanrio generation algorithm | ga, nsga2, random |
 | runs | number of times to run the algorithm      |  an integer value |
 | save_results | whether to save results data and images     |  True, False |
 | seed | Random seed value    |  an integer value|
 |debug | Whether to print debug data to the log file    |  True, False|
+
 
 You can also change the parameters of optimization algorithm as well as the parameters of your problem and the system under test in the ```config.py``` file.  
 Here's of how to configure the tool to run the test case generation for autonomous robot using the NSGA-II algorithm:
