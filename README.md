@@ -55,6 +55,7 @@ pip install -r requirements.txt
 | save_results | whether to save results data and images     |  True, False |
 | seed | Random seed value    |  an integer value|
 |debug | Whether to print debug data to the log file    |  True, False|
+
 You can also change the parameters of optimization algorithm as well as the parameters of your problem and the system under test in the ```config.py``` file.  
 Here's of how to configure the tool to run the test case generation for autonomous robot using the NSGA-II algorithm:
     ```python
