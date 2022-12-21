@@ -56,7 +56,7 @@ class VehicleSampling(Sampling):
 
     def _do(self, problem, n_samples, **kwargs):
 
-        X = np.full((n_samples, 1), None, dtype=np.object)
+        X = np.full((n_samples, 1), None, dtype=object)
 
         for i in range(n_samples):
             states, fitness = generate_random_road()

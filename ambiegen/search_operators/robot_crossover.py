@@ -23,7 +23,7 @@ class RobotCrossover(Crossover):
         _, n_matings, _ = X.shape
         # The output owith the shape (n_offsprings, n_matings, n_var)
 
-        Y = np.full_like(X, None, dtype=np.object)
+        Y = np.full_like(X, None, dtype=object)
 
         # for each mating provided
         for k in range(n_matings):

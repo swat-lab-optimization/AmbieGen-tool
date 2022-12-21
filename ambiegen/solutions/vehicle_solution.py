@@ -41,6 +41,7 @@ class VehicleSolution:
         test_map = Map(self.map_size)
         car = Car(self.speed, self.steer_ang, self.map_size)
         road_points = test_map.get_points_from_states(self.states)
+        self.states = self.states[:len(road_points)-1].copy()
         if len(road_points) <= 2:
             self.fitness = 0
         else:

@@ -53,7 +53,7 @@ class RobotSampling(Sampling):
 
         returns: a tensor of candidate solutions
         """
-        X = np.full((n_samples, 1), None, dtype=np.object)
+        X = np.full((n_samples, 1), None, dtype=object)
         for i in range(n_samples):
             s = RobotSolution()
             states, fitness = generate_random_solution(

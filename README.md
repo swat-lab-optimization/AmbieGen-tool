@@ -79,7 +79,6 @@ runs. At the output two boxplots showing the fitness diversity of the
 scenarios in the test suites produced over the specified number of runs. Also a plot showing the best values found by the compared search algorithms over the
 generations is produced. 
 
-
 8. More information about the avalable options can be found in the [next section](https://github.com/swat-lab-optimization/AmbieGen-tool#options-and-parameters).
 
 ## Options and parameters
