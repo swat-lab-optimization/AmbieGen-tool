@@ -57,43 +57,41 @@ class RobotSolution:
 
         return self.fitness
 
-    def compare_states(self, state1, state2):
+    def intersect(self, tc1, tc2):
         """
-        This function compares two states and returns a similarity score
+        Compute the intersection of two sets (two test cases)
 
         Args:
-          state1: The first state to compare.
-          state2: The state to compare to.
+          state1: the first element to compare
+          state2: the second element to compare
+
+        Returns:
+          The list of similar elements in the two test cases 
         """
-        similarity = 0
-        if state1[0] == state2[0]:
-            similarity += 1
-            if abs(state1[1] - state2[1]) <= 5:
-                similarity += 1
-            if abs(state1[2] - state2[2]) <= 5:
-                similarity += 1
+        intersection = []
+        tc_size  = min(len(tc1), len(tc2))
+        for i in range(tc_size):
+            if tc1[i][0] == tc2[i][0]:
+                if (abs(tc1[i][1] - tc2[i][1]) <= 5) and (abs(tc1[i][2] - tc2[i][2]) <= 5):
+                    intersection.append(tc1[i])
 
-        return similarity
-
+        return intersection
+                
     def calculate_novelty(self, tc1, tc2):
         """
-        > The function calculates the novelty of two states by comparing the similarity of each element in
-        the two states
+        > The novelty of two test cases is the proportion of states that are unique to each test case
+        We implement novelty calculation according to Jaccard distance definition:
+        intersection/(set1 size + set2 size - intersection)
         
-        :param state1: the current state of the robot
-        :param state2: the current state of the robot
-        :return: The novelty of the state.
+        :param tc1: The first test case
+        :param tc2: The test case that is being compared to the test suite
+        :return: The novelty of the two test cases.
         """
+        intersection = self.intersect(tc1, tc2)
+        total_states = len(tc1) + len(tc2) - len(intersection)
 
-        similarity = 0
-        state_num = min(len(tc1), len(tc2))
-
-        total_states = state_num * 3#cf.robot_env["elem_types"]
-        for i in range(state_num):
-            similarity += self.compare_states(tc1[i], tc2[i])
-
-        novelty = 1 - (similarity / total_states)
-        return novelty
+        novelty = 1 - len(intersection) / total_states
+        return -novelty
 
     @staticmethod
     def build_image(states, save_path="test.png"):

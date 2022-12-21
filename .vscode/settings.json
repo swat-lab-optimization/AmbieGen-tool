@@ -1,3 +1,5 @@
 {
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "docwriter.style": "Google",
+    "docwriter.progress.trackMethods": false
 }

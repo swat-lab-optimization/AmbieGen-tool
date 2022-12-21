@@ -54,45 +54,44 @@ class VehicleSolution:
 
         return self.fitness
 
-    # @staticmethod
-    def compare_states(self, state1, state2):
+
+    def intersect(self, tc1, tc2):
         """
-        If the two states are the same, then the similarity is 1. If the two states are different, then the
-        similarity is 0
+        Compute the intersection of two sets (two test cases)
 
         Args:
           state1: the first element to compare
-          state2: the secoind element to compare
+          state2: the second element to compare
 
         Returns:
-          The similarity of the two states.
+          The list of similar elements in the two test cases 
         """
-        similarity = 0
-        if state1[0] == state2[0]:
-            similarity += 1
-            if state1[0] == 0:
-                if abs(state1[1] - state2[1]) <= 2:
-                    similarity += 1
-            else:
-                if abs(state1[2] - state2[2]) <= 5:
-                    similarity += 1
-
-        return similarity
-
+        intersection = []
+        tc_size  = min(len(tc1), len(tc2))
+        for i in range(tc_size):
+            if tc1[i][0] == tc2[i][0]:
+                if tc1[i][0] == 0:
+                    if abs(tc1[i][1] - tc2[i][1]) <= 5:
+                        intersection.append(tc1[i])
+                else:
+                    if abs(tc1[i][2] - tc2[i][2]) <= 5:
+                        intersection.append(tc1[i])
+        return intersection
+                
     def calculate_novelty(self, tc1, tc2):
         """
-        novelty = calc_novelty(state1, state2, "vehicle")
-        return -novelty
+        > The novelty of two test cases is the proportion of states that are unique to each test case
+        We implement novelty calculation according to Jaccard distance definition:
+        intersection/(set1 size + set2 size - intersection)
+        
+        :param tc1: The first test case
+        :param tc2: The test case that is being compared to the test suite
+        :return: The novelty of the two test cases.
         """
+        intersection = self.intersect(tc1, tc2)
+        total_states = len(tc1) + len(tc2) - len(intersection)
 
-        similarity = 0
-        state_num = min(len(tc1), len(tc2))
-
-        total_states = state_num * cf.vehicle_env["elem_types"]
-        for i in range(state_num):
-            similarity += self.compare_states(tc1[i], tc2[i])
-        novelty = 1 - (similarity / total_states)
-
+        novelty = 1 - len(intersection) / total_states
         return -novelty
 
     @staticmethod
