@@ -1,5 +1,5 @@
 
-ga = {"pop_size": 100, "n_gen": 60, "mut_rate": 0.4, "cross_rate": 0.9, "test_suite_size": 10}
+ga = {"pop_size": 100, "n_gen": 100, "mut_rate": 0.4, "cross_rate": 0.9, "test_suite_size": 10}
 files = {"stats_path": "stats", "tcs_path": "tcs", "images_path": "tc_images"}
 
 vehicle_env = {
