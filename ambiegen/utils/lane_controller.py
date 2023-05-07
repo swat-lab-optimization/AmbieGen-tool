@@ -1,15 +1,12 @@
+import math
 
-import math 
-import numpy as np
-
-# The LaneController class implements a controller for a vehicle to follow a given set of waypoints
-# while adjusting speed and steering angle based on the current position and orientation of the
-# vehicle.
-# The LaneController class implements a controller for a lane with various parameters such as speed
-# and waypoints.
 class LaneController:
     """
-    Class implementing a lane controller
+    The LaneController class implements a controller for a vehicle to follow a given set of waypoints
+    while adjusting speed and steering angle based on the current position and orientation of the
+    vehicle.
+    The LaneController class implements a controller for a lane with various parameters such as speed
+    and waypoints.
     """
     def __init__(self, waypoints, speed):
         self.waypoints = waypoints
@@ -59,7 +56,6 @@ class LaneController:
         if self.current_waypoint >=  len(self.waypoints) - 4:
             self.done = True
             steering = 0
-            speeed = 0
         else:
 
             dx = self.waypoints[self.current_waypoint+1][0] - x

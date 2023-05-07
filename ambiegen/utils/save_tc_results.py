@@ -1,3 +1,6 @@
+'''
+Module for saving the test generation statistics and convergence.
+'''
 import os
 import json
 import logging as log

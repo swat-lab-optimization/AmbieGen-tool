@@ -2,11 +2,10 @@
 import numpy as np
 
 from scipy.interpolate import splprep, splev
-from shapely.geometry import LineString, Point
 from numpy.ma import arange
 
 #import config as cf
-from shapely.geometry import LineString, Polygon
+from shapely.geometry import LineString
 import config as cf
 
 rounding_precision = 3

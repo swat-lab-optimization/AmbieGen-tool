@@ -1,16 +1,9 @@
 
-import json
-
-import numpy as np
-
 from scipy.interpolate import splprep, splev
-from shapely.geometry import LineString, Point
 from numpy.ma import arange
-import math
 import matplotlib.pyplot as plt 
-from shapely.geometry import LineString, Polygon
+from shapely.geometry import LineString
 from descartes import PolygonPatch
-from ambiegen.utils.car_road import Map
 
 from ambiegen.utils.lane_controller import LaneController
 from ambiegen.utils.kinematic_model import KinematicModel
@@ -20,45 +13,45 @@ from ambiegen.utils.road_validity_check import is_valid_road
 #from simulator.code_pipeline.validation import TestValidator
 
 def interpolate_road(road):
-        """
-        It takes a list of points (road) and returns a list of points (nodes) that are evenly spaced
-        along the road
+    """
+    It takes a list of points (road) and returns a list of points (nodes) that are evenly spaced
+    along the road
 
-        Args:
-          road: a list of tuples, each tuple is a point on the road
+    Args:
+        road: a list of tuples, each tuple is a point on the road
 
-        Returns:
-          A list of tuples.
-        """
+    Returns:
+        A list of tuples.
+    """
 
-        test_road = LineString([(t[0], t[1]) for t in road])
+    test_road = LineString([(t[0], t[1]) for t in road])
 
-        length = test_road.length
+    length = test_road.length
 
-        num_nodes = int(length)
-        if num_nodes < 20:
-            num_nodes = 20
+    num_nodes = int(length)
+    if num_nodes < 20:
+        num_nodes = 20
 
-        old_x_vals = [t[0] for t in road]
-        old_y_vals = [t[1] for t in road]
+    old_x_vals = [t[0] for t in road]
+    old_y_vals = [t[1] for t in road]
 
-        if len(old_x_vals) == 2:
-            k = 1
-        elif len(old_x_vals) == 3:
-            k = 2
-        else:
-            k = 3
-        f2, u = splprep([old_x_vals, old_y_vals], s=0, k=k)
+    if len(old_x_vals) == 2:
+        k = 1
+    elif len(old_x_vals) == 3:
+        k = 2
+    else:
+        k = 3
+    f2, u = splprep([old_x_vals, old_y_vals], s=0, k=k)
 
-        step_size = 1 / num_nodes *5
+    step_size = 1 / num_nodes *5
 
-        xnew = arange(0, 1 + step_size, step_size)
+    xnew = arange(0, 1 + step_size, step_size)
 
-        x2, y2 = splev(xnew, f2)
+    x2, y2 = splev(xnew, f2)
 
-        nodes = list(zip(x2, y2))
+    nodes = list(zip(x2, y2))
 
-        return nodes
+    return nodes
 
 
 def build_tc(road_points, car_path, fitness, path):
