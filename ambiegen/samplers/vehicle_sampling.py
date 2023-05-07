@@ -4,8 +4,11 @@ import numpy as np
 from pymoo.core.sampling import Sampling
 import config as cf
 from ambiegen.utils.car_road import Map
-from ambiegen.utils.vehicle import Car
+#from ambiegen.utils.vehicle import Car
 from ambiegen.solutions import VehicleSolution
+from ambiegen.utils.vehicle_evaluate import evaluate_scenario
+from ambiegen.utils.vehicle_evaluate import interpolate_road
+from ambiegen.utils.road_validity_check import is_valid_road
 
 def generate_random_road():
     """
@@ -17,15 +20,16 @@ def generate_random_road():
 
     map_size = cf.vehicle_env["map_size"]
 
-    speed = 9
-    steer_ang = 12
+    #speed = 9
+    #steer_ang = 12
 
     fitness = 0
+    valid_road = False
 
-    while fitness == 0:  # ensures that the generated road is valid
+    while not(valid_road):  # ensures that the generated road is valid
         done = False
         test_map = Map(map_size)
-        car = Car(speed, steer_ang, map_size)
+        #car = Car(speed, steer_ang, map_size)
         while not done:
             action = np.random.choice(actions)
             if action == 0:
@@ -39,11 +43,12 @@ def generate_random_road():
                 done = not (test_map.turn_left(angle))
         scenario = test_map.scenario[:-1]
 
-        road_points = test_map.get_points_from_states(scenario)
-        intp_points = car.interpolate_road(road_points)
-        fitness, _ = car.execute_road(intp_points)
+        road_points, scenario = test_map.get_points_from_states(scenario)
+        #intp_points = interpolate_road(road_points)
+        #fitness, _ = evaluate_scenario(intp_points)
+        valid_road = is_valid_road(road_points)
 
-    return scenario, fitness
+    return scenario#, fitness
 
 
 class VehicleSampling(Sampling):
@@ -59,10 +64,10 @@ class VehicleSampling(Sampling):
         X = np.full((n_samples, 1), None, dtype=object)
 
         for i in range(n_samples):
-            states, fitness = generate_random_road()
+            states = generate_random_road()
             s = VehicleSolution()
             s.states = states
-            s.fitness = fitness
+            #s.fitness = fitness
             X[i, 0] = s
 
         log.debug("Initial population of %d solutions generated", n_samples)

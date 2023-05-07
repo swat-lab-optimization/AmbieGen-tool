@@ -1,6 +1,7 @@
 
 import os
 import logging as log
+from datetime import datetime
 from ambiegen.solutions.robot_solution import RobotSolution
 from ambiegen.solutions.vehicle_solution import VehicleSolution
 
@@ -19,8 +20,9 @@ def save_tcs_images(test_suite, problem, run, algo):
       run: the number of the runs
         algo: the algorithm used to generate the test suite. Can be "random", "ga", "nsga2",
     """
-
-    images_path = cf.files["images_path"] +  "_" + algo
+    now = datetime.now()
+    dt_string = now.strftime("%d-%m-%Y")
+    images_path = dt_string + cf.files["images_path"] +  "_" + algo
 
     if not os.path.exists(images_path):
         os.makedirs(images_path)

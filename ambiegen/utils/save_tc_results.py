@@ -19,8 +19,8 @@ def save_tc_results(tc_stats, tcs, tcs_convergence, algo):
     now = datetime.now()
     dt_string = now.strftime("%d-%m-%Y")
 
-    stats_path = cf.files["stats_path"] + "_" + algo
-    tcs_path = cf.files["tcs_path"] + "_" + algo
+    stats_path = dt_string + cf.files["stats_path"] + "_" + algo
+    tcs_path = dt_string + cf.files["tcs_path"] + "_" + algo
 
     if not os.path.exists(stats_path):
         os.makedirs(stats_path)

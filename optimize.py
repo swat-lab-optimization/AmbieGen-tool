@@ -56,7 +56,7 @@ def parse_arguments():
                     epilog = "For more information, please visit https://github.com/swat-lab-optimization/AmbieGen-tool ")
     parser.add_argument('--problem', type=str, default="vehicle", help='Problem to solve, possivle values: vehicle, robot')
     parser.add_argument('--algorithm', type=str, default="nsga2", help='Algorithm to use, possivle values: nsga2, ga, random')
-    parser.add_argument('--runs', type=int, default=1, help='Number of runs')
+    parser.add_argument('--runs', type=int, default=2, help='Number of runs')
     parser.add_argument('--save_results', type=str, default=True, help='Save results, possible values: True, False')
     parser.add_argument('--seed', type=int, default=None, help='Random seed')
     parser.add_argument('--debug', type=str, default=False, help='Run in debug mode, possible values: True, False')

@@ -378,23 +378,38 @@ class Map:
           The points of the road.
         """
 
+        self.road_points_list = [[self.max_x / 2, self.max_y / 2]]
+        self.init_pos, self.init_end = self.init_position()
+        self.current_pos = [self.init_pos, self.init_end]
+        self.all_position_list = [[self.init_pos, self.init_end]]
+
         tc = states
+        new_states = []
         for state in tc:
+            new_states.append(state)
             action = state[0]
             if action == 0:
                 done = self.go_straight(state[1])
                 if not (done):
+                    if len(new_states) > 2:
+                        del new_states[-1]
                     break
             elif action == 2:
                 done = self.turn_left(state[2])
                 if not (done):
+                    if len(new_states) > 2:
+                        del new_states[-1]
                     break
             elif action == 1:
                 done = self.turn_right(state[2])
                 if not (done):
+                    if len(new_states) > 2:
+                        del new_states[-1]
                     break
             else:
                 log.error("ERROR, invalid action")
+            
 
         points = self.road_points_list[:-1]
-        return points
+
+        return points, new_states

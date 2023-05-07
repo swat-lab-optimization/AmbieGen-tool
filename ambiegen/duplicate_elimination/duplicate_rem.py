@@ -15,6 +15,6 @@ class DuplicateElimination(ElementwiseDuplicateElimination):
 
         # Calculating the novelty of the two states.
         novelty = abs(a.X[0].calculate_novelty(state1, state2))
-        if novelty  < 0.1:
+        if novelty  < 0.2:
             log.debug("Duplicate %s and %s found", a.X[0], b.X[0])
-        return novelty < 0.1
+        return novelty < 0.2

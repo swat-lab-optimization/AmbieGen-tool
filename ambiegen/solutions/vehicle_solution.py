@@ -1,11 +1,17 @@
 
 
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+from shapely.geometry import LineString, Polygon
+from descartes import PolygonPatch
+import copy
 
-import config as cf
 from ambiegen.utils.car_road import Map
 from ambiegen.utils.vehicle import Car
+import config as cf
 
+from ambiegen.utils.vehicle_evaluate import evaluate_scenario
+from ambiegen.utils.vehicle_evaluate import interpolate_road
 
 class VehicleSolution:
 
@@ -40,14 +46,14 @@ class VehicleSolution:
         """
         test_map = Map(self.map_size)
         car = Car(self.speed, self.steer_ang, self.map_size)
-        road_points = test_map.get_points_from_states(self.states)
-        self.states = self.states[:len(road_points)].copy()
+        road_points, new_states = test_map.get_points_from_states(self.states)
+        self.states = copy.deepcopy(new_states)
         if len(road_points) <= 2:
             self.fitness = 0
         else:
-            intp_points = car.interpolate_road(road_points)
-            self.fitness, self.car_path = car.execute_road(
-                intp_points
+            self.intp_points = interpolate_road(road_points)
+            self.fitness, self.car_path = evaluate_scenario(
+                self.intp_points
             )
 
         self.road_points = road_points
@@ -105,13 +111,15 @@ class VehicleSolution:
         """
         map_size = cf.vehicle_env["map_size"]
         test_map = Map(map_size)
-        road_points = test_map.get_points_from_states(states)
+        road_points, new_states = test_map.get_points_from_states(states)
+        states = copy.deepcopy(new_states)
         speed = 9
         steer_ang = 12
         car = Car(speed, steer_ang, map_size)
-        intp_points = car.interpolate_road(road_points)
+        #intp_points = car.interpolate_road(road_points)
+        intp_points = interpolate_road(road_points)
 
-        fig, ax = plt.subplots(figsize=(12, 12))
+        fig, ax = plt.subplots(figsize=(8, 8))
         road_x = []
         road_y = []
 
@@ -119,10 +127,10 @@ class VehicleSolution:
             road_x.append(p[0])
             road_y.append(p[1])
 
-        fitness, car_path = car.execute_road(intp_points)
+        #fitness, car_path = car.execute_road(intp_points)
+        fitness, car_path = evaluate_scenario(intp_points)
 
-  
-        if len(car_path) > 0:
+        if len(car_path):
             ax.plot(car_path[0], car_path[1], "bo", label="Car path")
 
         ax.plot(road_x, road_y, "yo--", label="Road")
@@ -130,8 +138,14 @@ class VehicleSolution:
         top = map_size
         bottom = 0
 
-        ax.set_title("Test case fitenss " + str(fitness), fontsize=17)
+        road_poly = LineString([(t[0], t[1]) for t in intp_points]).buffer(8.0, cap_style=2, join_style=2)
+        road_patch = PolygonPatch((road_poly), fc='gray', ec='dimgray')  # ec='#555555', alpha=0.5, zorder=4)
+        ax.add_patch(road_patch)
 
+
+        ax.set_title("Test case fitenss " + str(fitness), fontsize=17)
+        ax.tick_params(axis='both', which='major', labelsize=16)
+        ax.legend(fontsize=16)
         ax.set_ylim(bottom, top)
         plt.ioff()
         ax.set_xlim(bottom, top)

@@ -5,13 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "demo.py",
+            "type": "python",
+            "request": "launch",
+            "program": "demo.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+            //"args": ["--problem", "robot", "--algorithm", "nsga2", "--runs", "30", "--save_results", "True"]
+        },
+
+        {
             "name": "optimize.py",
             "type": "python",
             "request": "launch",
             "program": "optimize.py",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["--problem", "vehicle", "--algorithm", "nsga2", "--runs", "2", "--save_results", "True"]
+            "args": ["--problem", "robot", "--algorithm", "nsga2", "--runs", "30", "--save_results", "True"]
         },
         {
             "name": "compare.py",
@@ -20,7 +30,8 @@
             "program": "compare.py",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["--stats_path", "stats", "--stats_names", "NSGA-II"]
+            "args": ["--stats_path", "stats_nsga2", "--stats_names", "NSGA-II"]
+
         }
     ]
 }

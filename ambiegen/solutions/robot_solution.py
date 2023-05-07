@@ -72,7 +72,7 @@ class RobotSolution:
         tc_size  = min(len(tc1), len(tc2))
         for i in range(tc_size):
             if tc1[i][0] == tc2[i][0]:
-                if (abs(tc1[i][1] - tc2[i][1]) <= 5) and (abs(tc1[i][2] - tc2[i][2]) <= 5):
+                if (abs(tc1[i][1] - tc2[i][1]) <= 2) and (abs(tc1[i][2] - tc2[i][2]) <= 2):
                     intersection.append(tc1[i])
 
         return intersection
