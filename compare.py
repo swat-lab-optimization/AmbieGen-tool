@@ -125,7 +125,7 @@ def main(stats_path, stats_names):
         fitness_list.append(results_fitness)
         novelty_list.append(results_novelty)
 
-    plot_boxplot(fitness_list, stats_names, "fitness", 20)
+    plot_boxplot(fitness_list, stats_names, "fitness", 12)
     plot_boxplot(novelty_list, stats_names, "novelty", 1)
 
 if __name__ == "__main__":

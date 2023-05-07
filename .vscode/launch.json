@@ -30,7 +30,7 @@
             "program": "compare.py",
             "console": "integratedTerminal",
             "justMyCode": false,
-            "args": ["--stats_path", "stats_nsga2", "--stats_names", "NSGA-II"]
+            "args": ["--stats_path", "stats_random", "stats_nsga2", "--stats_names", "Random", "NSGA-II"]
 
         }
     ]
