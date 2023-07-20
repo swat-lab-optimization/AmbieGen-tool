@@ -105,7 +105,7 @@ generations is produced.
     ```
     Here the ```population size``` is set to 150, the ```number of generations``` to 200, the ```mutation rate``` to 0.4 and the ```crossover rate``` to 0.9.
 
-    In the ```vehicle_env``` and ```robot_env``` sections you can specify the parameters of the system under test, such as the map size, the minimal and the maximal possible values of the attributes. An important parameter is ```elem_types``` which is used to calculate the novelty. It specifies the number of environmental elements types. For example, for autonomous vehicle we have 3 types of road segments: straight, left and right. So the ```elem_types``` is set to 3. 
+    In the ```vehicle_env``` and ```robot_env``` sections you can specify the parameters of the system under test, such as the map size, the minimal and the maximal possible values of the attributes. 
 
     In the ```files``` section you can specifie the folders to save the output files such as the statistics about the generated test cases (```stats_path```), the generated test cases (```tcs_path```) and the images of the generated test cases (```images_path```).
 
