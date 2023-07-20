@@ -16,15 +16,17 @@
   [![HitCount](https://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool.svg?style=flat-square&show=unique)](http://hits.dwyl.com/swat-lab-optimization/AmbieGen-tool) -->
 The framework, along with some initial results, is covered in the paper [A search-based framework for automatic generation of testing environments for cyber–physical systems](https://www.sciencedirect.com/science/article/pii/S0950584922000866). This paper should be cited if code from this project is used in any way:
 ```
-@article{HUMENIUK2022106936,
-title = {A search-based framework for automatic generation of testing environments for cyber–physical systems},
-journal = {Information and Software Technology},
-volume = {149},
-pages = {106936},
-year = {2022},
-issn = {0950-5849},
-doi = {https://doi.org/10.1016/j.infsof.2022.106936},
-author = {Dmytro Humeniuk and Foutse Khomh and Giuliano Antoniol}
+@article{HUMENIUK2023102990,
+title = {AmbieGen: A search-based framework for autonomous systems testingImage 1},
+journal = {Science of Computer Programming},
+volume = {230},
+pages = {102990},
+year = {2023},
+issn = {0167-6423},
+doi = {https://doi.org/10.1016/j.scico.2023.102990},
+url = {https://www.sciencedirect.com/science/article/pii/S0167642323000722},
+author = {Dmytro Humeniuk and Foutse Khomh and Giuliano Antoniol},
+keywords = {Evolutionary search, Autonomous systems, Self driving cars, Autonomous robots, Neural network testing},
 }
 ```
 ## Installation
