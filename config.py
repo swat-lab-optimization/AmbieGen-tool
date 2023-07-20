@@ -4,18 +4,18 @@ files = {"stats_path": "stats", "tcs_path": "tcs", "images_path": "tc_images"}
 
 vehicle_env = {
     "map_size": 200,
-    "min_len": 5,  # minimal possible distance in meters
-    "max_len": 30,  # maximal possible disance to go straight in meters
-    "min_angle": 10,  # minimal angle of rotation in degrees
-    "max_angle": 80,  # maximal angle of rotation in degrees
+    "min_len": 5,  # min road segment length
+    "max_len": 30,  # max road segment length
+    "min_angle": 10,  # min road segment angle of rotation in degrees
+    "max_angle": 80,  # max road angle of rotation in degrees
 }
 
 robot_env = {
     "map_size": 40,
-    "min_len": 8,  # 3,  # minimal possible distance in meters
-    "max_len": 15,  # 12,#15,  # maximal possible disance to go straight in meters
-    "min_pos": 1,  # minimal possible
-    "max_pos": 38,  # 49 29,  # maximal possible position in meters
+    "min_len": 8,  # min wall size
+    "max_len": 15,  # max wall size
+    "min_pos": 1,  # min wall position along X axis
+    "max_pos": 38,  #  max wall position along X axis
 }
 
 
